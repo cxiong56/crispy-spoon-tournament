@@ -3,6 +3,8 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -54,13 +56,6 @@ public class Main extends Application {
 //				newRoot.setCenter(root);
 //				root = newRoot;
 //			}
-			
-
-//			root.setCenter(new BorderPane());
-//			root.setRight(new Label("Sup"));
-//			root.setLeft(new Label("BRos"));
-			primaryStage.setScene(new Scene(root));
-			primaryStage.show();
 			
 			
 //			primaryStage.setScene(scene1);
@@ -130,6 +125,45 @@ public class Main extends Application {
 		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
 	}
+	
+	private int[] scoreInput() {//the input parameter could be match object
+        Stage stage = new Stage();
+        stage.setTitle("Enter Score or TeamA vs TeamB");
+        int []score = new int [2];
+        
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10,10,10,10));
+        grid.setVgap(8);
+        grid.setHgap(10);
+        
+        //TeamA
+        Label teamA = new Label("insert TeamA String");
+        TextField score1 = new TextField("0");
+        GridPane.setConstraints(teamA, 0, 0);
+        GridPane.setConstraints(score1, 1, 0);
+        
+        //TeamB
+        Label teamB = new Label("insert TeamB String");
+        TextField score2 = new TextField("0");
+        GridPane.setConstraints(teamB, 0, 1);
+        GridPane.setConstraints(score2, 1, 1);
+        
+        //Confirm Button
+        Button confirm = new Button("Add");
+        confirm.setOnAction(e -> {
+            System.out.println("get text, parse, throw errors, and store in array");
+            stage.close();
+        });
+        GridPane.setConstraints(confirm, 1, 2);
+        
+        grid.getChildren().addAll(teamA,score1,teamB,score2,confirm);
+        
+        Scene scene = new Scene(grid,300,200);
+        stage.setScene(scene);
+        stage.show();
+        
+        return score;
+    }
 
 	public static void main(String[] args) {
 		launch(args);
