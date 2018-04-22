@@ -29,11 +29,13 @@ public class Main extends Application {
 			
 			BorderPane root = new BorderPane();
 
+			int count = 0;
 			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
 				VBox oneColR = new VBox();
 				VBox oneColL = new VBox();
-				Button buttonR = new Button("Score Entry");
+				
 				for (int i = 0; i < teamNum / 2; i++) {
+					Button buttonR = new Button("Score Entry");
 					VBox right = new VBox();
 					HBox rightH = new HBox();
 					// rightH.getBorder().getInsets().
@@ -41,9 +43,9 @@ public class Main extends Application {
 					rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
 							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 
-					right.getChildren().addAll(makeTeam("RTeam " + i), makeTeam("RTeam " + i + 1), buttonR);
+					right.getChildren().addAll(makeTeam("RTeam " + count), makeTeam("RTeam " + count + 1), buttonR);
 					rightH.getChildren().add(right);
-
+					count = count +2;
 					oneColR.getChildren().add(rightH);
 				}
 				// right.getChildren().add(makeTeam("RTeam" + i));
@@ -56,14 +58,15 @@ public class Main extends Application {
 					leftH.setSpacing(10);
 					leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
 							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: red;");
-					left.getChildren().addAll(makeTeam("LTeam" + i), makeTeam("LTeam" + i+1), buttonL);
+					left.getChildren().addAll(makeTeam("LTeam " + count), makeTeam("LTeam " + count+1), buttonL);
 					leftH.getChildren().add(left);
+					count = count +2;
 					oneColL.getChildren().add(leftH);
 				}
 
 				root.setRight(oneColR);
 				root.setLeft(oneColL);
-				// }
+				
 				BorderPane newRoot = new BorderPane();
 				newRoot.setCenter(root);
 				root = newRoot;
