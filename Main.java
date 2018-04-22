@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,20 +26,34 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			
-			BorderPane root = new BorderPane();
-			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
-				VBox right = new VBox();
-				for (int i = 0; i < teamNum; i++)
-					right.getChildren().add(makeTeam("RTeam" + i));
-				VBox left = new VBox();
-				for (int i = 0; i < teamNum; i++)
-					left.getChildren().add(makeTeam("LTeam" + i));
-				root.setRight(right);
-				root.setLeft(left);
-				BorderPane newRoot = new BorderPane();
-				newRoot.setCenter(root);
-				root = newRoot;
+			GridPane root = new GridPane();
+			int max = 7;
+			int min = 0;
+			int offset = 0;
+			for (int teamNum = 8; teamNum >= 2; teamNum /= 2) {
+				for (int i = 0; i < teamNum; i++) {
+					root.add(makeTeam("RTeam" + i), max, i + offset);
+					root.add(makeTeam("LTeam" + i), min, i + offset);
+				}
+				min++;
+				max--;
+				offset += teamNum / 4;
 			}
+			
+//			BorderPane root = new BorderPane();
+//			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
+//				VBox right = new VBox();
+//				for (int i = 0; i < teamNum; i++)
+//					right.getChildren().add(makeTeam("RTeam" + i));
+//				VBox left = new VBox();
+//				for (int i = 0; i < teamNum; i++)
+//					left.getChildren().add(makeTeam("LTeam" + i));
+//				root.setRight(right);
+//				root.setLeft(left);
+//				BorderPane newRoot = new BorderPane();
+//				newRoot.setCenter(root);
+//				root = newRoot;
+//			}
 			
 
 //			root.setCenter(new BorderPane());
