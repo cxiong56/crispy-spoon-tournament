@@ -28,29 +28,46 @@ public class Main extends Application {
 		try {
 			
 			BorderPane root = new BorderPane();
+
 			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
-				HBox rightH = new HBox();
-				//rightH.getBorder().getInsets().
+				VBox oneColR = new VBox();
+				VBox oneColL = new VBox();
+				Button buttonR = new Button("Score Entry");
+				for (int i = 0; i < teamNum / 2; i++) {
+					VBox right = new VBox();
+					HBox rightH = new HBox();
+					// rightH.getBorder().getInsets().
 					rightH.setSpacing(10);
-					rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
-							+ "-fx-border-width: 5;" + "-fx-border-insets: 5;"
-							+ "-fx-border-radius: 5;" + "-fx-border-color: blue;");
-				VBox right = new VBox();
-				for (int i = 0; i < teamNum; i++)
-					right.getChildren().add(makeTeam("RTeam" + i));
+					rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
+							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
+
+					right.getChildren().addAll(makeTeam("RTeam " + i), makeTeam("RTeam " + i + 1), buttonR);
 					rightH.getChildren().add(right);
-				VBox left = new VBox();
-				for (int i = 0; i < teamNum; i++)
-					left.getChildren().add(makeTeam("LTeam" + i));
-				root.setRight(right);
-				root.setLeft(left);
+
+					oneColR.getChildren().add(rightH);
+				}
+				// right.getChildren().add(makeTeam("RTeam" + i));
+				// rightH.getChildren().add(right);
+
+				for (int i = 0; i < teamNum / 2; i++) {
+					HBox leftH = new HBox();
+					VBox left = new VBox();
+					Button buttonL = new Button("Score Entry");
+					leftH.setSpacing(10);
+					leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
+							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: red;");
+					left.getChildren().addAll(makeTeam("LTeam" + i), makeTeam("LTeam" + i+1), buttonL);
+					leftH.getChildren().add(left);
+					oneColL.getChildren().add(leftH);
+				}
+
+				root.setRight(oneColR);
+				root.setLeft(oneColL);
+				// }
 				BorderPane newRoot = new BorderPane();
 				newRoot.setCenter(root);
 				root = newRoot;
 			}
-			
-			Button enterScore = new Button("TryScore");
-			enterScore.setOnAction(e -> scoreInput());
 
 //			root.setCenter(new BorderPane());
 //			root.setRight(new Label("Sup"));
