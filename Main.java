@@ -32,7 +32,7 @@ public class Main extends Application {
 					right.getChildren().add(makeTeam("RTeam" + i));
 				VBox left = new VBox();
 				for (int i = 0; i < teamNum; i++)
-					left.getChildren().add(new Label("LTeam" + i));
+					left.getChildren().add(makeTeam("LTeam" + i));
 				root.setRight(right);
 				root.setLeft(left);
 				BorderPane newRoot = new BorderPane();
@@ -110,7 +110,9 @@ public class Main extends Application {
 	
 	private Node makeTeam(String string) {
 		VBox team = new VBox();
-		team.getChildren().add(new Label(string));
+	    TextField enterScores = new TextField();
+		enterScores.setPromptText("Final Score");
+		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
 	}
 
