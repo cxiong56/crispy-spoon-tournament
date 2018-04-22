@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,9 +26,24 @@ public class Main extends Application {
 		try {
 			
 			BorderPane root = new BorderPane();
-			root.setCenter(new BorderPane());
-			root.setRight(new Label("Sup"));
-			root.setLeft(new Label("BRos"));
+			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
+				VBox right = new VBox();
+				for (int i = 0; i < teamNum; i++)
+					right.getChildren().add(makeTeam("RTeam" + i));
+				VBox left = new VBox();
+				for (int i = 0; i < teamNum; i++)
+					left.getChildren().add(new Label("LTeam" + i));
+				root.setRight(right);
+				root.setLeft(left);
+				BorderPane newRoot = new BorderPane();
+				newRoot.setCenter(root);
+				root = newRoot;
+			}
+			
+
+//			root.setCenter(new BorderPane());
+//			root.setRight(new Label("Sup"));
+//			root.setLeft(new Label("BRos"));
 			primaryStage.setScene(new Scene(root));
 			primaryStage.show();
 			
@@ -92,6 +108,12 @@ public class Main extends Application {
 		}
 	}
 	
+	private Node makeTeam(String string) {
+		VBox team = new VBox();
+		team.getChildren().add(new Label(string));
+		return team;
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
