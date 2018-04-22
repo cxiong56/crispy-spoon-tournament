@@ -32,15 +32,19 @@ public class Main extends Application {
 			int max = 7;
 			int min = 0;
 			int offset = 0;
-			for (int teamNum = 8; teamNum >= 2; teamNum /= 2) {
-				for (int i = 0; i < teamNum; i++) {
-					root.add(makeTeam("RTeam" + i), max, i + offset);
+			int teamNum = 16;
+			for (int tn = teamNum; tn >= 2; tn /= 2) {
+				for (int i = 0; i < tn; i++) {
 					root.add(makeTeam("LTeam" + i), min, i + offset);
+					root.add(makeTeam("RTeam" + i), max, i + offset);
 				}
 				min++;
 				max--;
-				offset += teamNum / 4;
+				offset += tn / 4;
 			}
+			primaryStage.setScene(new Scene(root));
+			primaryStage.setTitle("Tournament Bracket");	
+			primaryStage.show();
 			
 //			BorderPane root = new BorderPane();
 //			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
