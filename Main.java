@@ -27,9 +27,16 @@ public class Main extends Application {
 			
 			BorderPane root = new BorderPane();
 			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
+				HBox rightH = new HBox();
+				//rightH.getBorder().getInsets().
+					rightH.setSpacing(10);
+					rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+							+ "-fx-border-width: 5;" + "-fx-border-insets: 5;"
+							+ "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 				VBox right = new VBox();
 				for (int i = 0; i < teamNum; i++)
 					right.getChildren().add(makeTeam("RTeam" + i));
+					rightH.getChildren().add(right);
 				VBox left = new VBox();
 				for (int i = 0; i < teamNum; i++)
 					left.getChildren().add(makeTeam("LTeam" + i));
