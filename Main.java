@@ -35,6 +35,69 @@ public class Main extends Application {
 					root.add(makeMatch("ALTeam" + i, "BLTeam" + i), min, i + offset);
 					root.add(makeMatch("ARTeam" + i, "BRTeam" + i), max, i + offset);
 				}
+
+				// primaryStage.setTitle("Tentative Tournament Bracket");
+				// BorderPane root = new BorderPane();
+				//
+				// int count = 0;
+				// for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
+				// VBox oneColR = new VBox();
+				// VBox oneColL = new VBox();
+				//
+				// int countR = 0;
+				// int countL = 0;
+				// for (int i = 0; i < teamNum / 2; i++) {
+				// final int match = i+1;
+				// final int teami = count;
+				// Button buttonR = new Button("Score Entry");
+				// buttonR.setOnAction(e -> scoreInput(match,"RTeam " +
+				// teami,"RTeam " + teami + 1));
+				// VBox right = new VBox();
+				// HBox rightH = new HBox();
+				// // rightH.getBorder().getInsets().
+				// rightH.setSpacing(10);
+				// rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
+				// inside;" + "-fx-border-width: 5;"
+				// + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
+				// "-fx-border-color: blue;");
+				//
+				// right.getChildren().addAll(makeTeam("RTeam " + countR),
+				// makeTeam("RTeam " + (countR + 1)), buttonR);
+				// rightH.getChildren().add(right);
+				// countR = countR +2;
+				// oneColR.getChildren().add(rightH);
+				// }
+				// // right.getChildren().add(makeTeam("RTeam" + i));
+				// // rightH.getChildren().add(right);
+				//
+				// for (int i = 0; i < teamNum / 2; i++) {
+				// HBox leftH = new HBox();
+				// VBox left = new VBox();
+				//
+				// final int match = i+1;
+				// final int teami = count;
+				// Button buttonL = new Button("Score Entry");
+				// buttonL.setOnAction(e -> scoreInput(match,"LTeam " +
+				// teami,"LTeam " + teami + 1));
+				//
+				// leftH.setSpacing(10);
+				// leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
+				// inside;" + "-fx-border-width: 5;"
+				// + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
+				// "-fx-border-color: red;");
+				// left.getChildren().addAll(makeTeam("LTeam " + countL),
+				// makeTeam("LTeam " + (countL+1)), buttonL);
+				// leftH.getChildren().add(left);
+				// countL = countL +2;
+				// oneColL.getChildren().add(leftH);
+				// }
+				//
+				// root.setRight(oneColR);
+				// root.setLeft(oneColL);
+				//
+				// BorderPane newRoot = new BorderPane();
+				// newRoot.setCenter(root);
+				// root = newRoot;
 			}
 			root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
 			primaryStage.setScene(new Scene(root));
@@ -62,9 +125,13 @@ public class Main extends Application {
 		return match;
 	}
 
-	private int[] scoreInput() {// the input parameter could be match object
+	private int[] scoreInput(int i, String team1, String team2) {// the input
+																	// parameter
+																	// could be
+																	// match
+																	// object
 		Stage stage = new Stage();
-		stage.setTitle("Enter Score or TeamA vs TeamB");
+		stage.setTitle("Match " + i + ": " + team1 + " vs. " + team2);
 		int[] score = new int[2];
 
 		GridPane grid = new GridPane();
@@ -73,13 +140,13 @@ public class Main extends Application {
 		grid.setHgap(10);
 
 		// TeamA
-		Label teamA = new Label("insert TeamA String");
+		Label teamA = new Label(team1);
 		TextField score1 = new TextField("0");
 		GridPane.setConstraints(teamA, 0, 0);
 		GridPane.setConstraints(score1, 1, 0);
 
 		// TeamB
-		Label teamB = new Label("insert TeamB String");
+		Label teamB = new Label(team2);
 		TextField score2 = new TextField("0");
 		GridPane.setConstraints(teamB, 0, 1);
 		GridPane.setConstraints(score2, 1, 1);
