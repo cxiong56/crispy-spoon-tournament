@@ -29,10 +29,10 @@ public class Main extends Application {
 		try {
 			
 			GridPane root = new GridPane();
-			int max = 7;
-			int min = 0;
 			int offset = 0;
 			int teamNum = 16;
+			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
+			int min = 0;
 			for (int tn = teamNum; tn >= 2; tn /= 2) {
 				for (int i = 0; i < tn; i++) {
 					root.add(makeTeam("LTeam" + i), min, i + offset);
@@ -42,6 +42,7 @@ public class Main extends Application {
 				max--;
 				offset += tn / 4;
 			}
+			root.add(makeTeam("champ"), min, teamNum / 2 - 1);
 			primaryStage.setScene(new Scene(root));
 			primaryStage.setTitle("Tournament Bracket");	
 			primaryStage.show();
