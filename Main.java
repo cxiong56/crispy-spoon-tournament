@@ -104,6 +104,8 @@ public class Main extends Application {
 			root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
 			scroll.setContent(root);
 			primaryStage.setScene(new Scene(scroll));
+			primaryStage.setHeight(800);
+           		primaryStage.setWidth(1250);
 			primaryStage.setTitle("Tournament Bracket");
 			primaryStage.show();
 		} catch (Exception e) {
