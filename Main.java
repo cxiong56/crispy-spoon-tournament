@@ -34,6 +34,8 @@ public class Main extends Application {
 				VBox oneColR = new VBox();
 				VBox oneColL = new VBox();
 				
+				int countR = 0;
+				int countL = 0;
 				for (int i = 0; i < teamNum / 2; i++) {
 					Button buttonR = new Button("Score Entry");
 					VBox right = new VBox();
@@ -43,9 +45,9 @@ public class Main extends Application {
 					rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
 							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 
-					right.getChildren().addAll(makeTeam("RTeam " + count), makeTeam("RTeam " + count + 1), buttonR);
+					right.getChildren().addAll(makeTeam("RTeam " + countR), makeTeam("RTeam " + (countR + 1)), buttonR);
 					rightH.getChildren().add(right);
-					count = count +2;
+					countR = countR +2;
 					oneColR.getChildren().add(rightH);
 				}
 				// right.getChildren().add(makeTeam("RTeam" + i));
@@ -58,9 +60,9 @@ public class Main extends Application {
 					leftH.setSpacing(10);
 					leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
 							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: red;");
-					left.getChildren().addAll(makeTeam("LTeam " + count), makeTeam("LTeam " + count+1), buttonL);
+					left.getChildren().addAll(makeTeam("LTeam " + countL), makeTeam("LTeam " + (countL+1)), buttonL);
 					leftH.getChildren().add(left);
-					count = count +2;
+					countL = countL +2;
 					oneColL.getChildren().add(leftH);
 				}
 
