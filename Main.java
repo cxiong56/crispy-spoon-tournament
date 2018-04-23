@@ -25,54 +25,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
-//			BorderPane root = new BorderPane();
-//
-//			int count = 0;
-//			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
-//				VBox oneColR = new VBox();
-//				VBox oneColL = new VBox();
-//				
-//				int countR = 0;
-//				int countL = 0;
-//				for (int i = 0; i < teamNum / 2; i++) {
-//					Button buttonR = new Button("Score Entry");
-//					VBox right = new VBox();
-//					HBox rightH = new HBox();
-//					// rightH.getBorder().getInsets().
-//					rightH.setSpacing(10);
-//					rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
-//							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
-//
-//					right.getChildren().addAll(makeTeam("RTeam " + countR), makeTeam("RTeam " + (countR + 1)), buttonR);
-//					rightH.getChildren().add(right);
-//					countR = countR +2;
-//					oneColR.getChildren().add(rightH);
-//				}
-//				// right.getChildren().add(makeTeam("RTeam" + i));
-//				// rightH.getChildren().add(right);
-//
-//				for (int i = 0; i < teamNum / 2; i++) {
-//					HBox leftH = new HBox();
-//					VBox left = new VBox();
-//					Button buttonL = new Button("Score Entry");
-//					leftH.setSpacing(10);
-//					leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
-//							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: red;");
-//					left.getChildren().addAll(makeTeam("LTeam " + countL), makeTeam("LTeam " + (countL+1)), buttonL);
-//					leftH.getChildren().add(left);
-//					countL = countL +2;
-//					oneColL.getChildren().add(leftH);
-//				}
-//
-//				root.setRight(oneColR);
-//				root.setLeft(oneColL);
-//				
-//				BorderPane newRoot = new BorderPane();
-//				newRoot.setCenter(root);
-//				root = newRoot;
-//			}
-
 			GridPane root = new GridPane();
 			int offset = 0;
 			int teamNum = 8;
@@ -88,77 +40,6 @@ public class Main extends Application {
 			primaryStage.setScene(new Scene(root));
 			primaryStage.setTitle("Tournament Bracket");
 			primaryStage.show();
-
-			// BorderPane root = new BorderPane();
-			// for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
-			// VBox right = new VBox();
-			// for (int i = 0; i < teamNum; i++)
-			// right.getChildren().add(makeTeam("RTeam" + i));
-			// VBox left = new VBox();
-			// for (int i = 0; i < teamNum; i++)
-			// left.getChildren().add(makeTeam("LTeam" + i));
-			// root.setRight(right);
-			// root.setLeft(left);
-			// BorderPane newRoot = new BorderPane();
-			// newRoot.setCenter(root);
-			// root = newRoot;
-			// }
-
-			// primaryStage.setScene(scene1);
-			// primaryStage.setTitle("Tournament Bracket");
-			// primaryStage.show();
-			// BorderPane root = new BorderPane();
-			// Scene scene = new Scene(root,600,600,Color.BLACK);
-			// //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			// //scene.
-			// //scene.
-			// primaryStage.setTitle("Bracket");
-			// primaryStage.setScene(scene);
-			// primaryStage.show();
-			// //create controls
-			// BorderPane paneOuterMost = new BorderPane();
-			//
-			// Label header = new Label ("Welcome to Your Tournament Bracket!");
-			// Rectangle r = new Rectangle(20,20,250,250);
-			// r.setFill(Color.BLUE);
-			// //root.getChildren().add(r);
-			// Label teamName = new Label("Team1");
-			// Label teamName2 = new Label("Team2");
-			//
-			// TextField enterScores = new TextField();
-			// enterScores.setPromptText("Final Score");
-			// TextField enterScores2 = new TextField();
-			// enterScores2.setPromptText("Final Score");
-			//
-			// HBox teamScore1 = new HBox();
-			// teamScore1.getChildren().addAll(teamName, enterScores);
-			// HBox teamScore2 = new HBox();
-			// teamScore2.getChildren().addAll(teamName2, enterScores2);
-			//
-			// Button submitButton = new Button("Submit");
-			// Button submitButton2 = new Button("Submit");
-			//
-			// VBox matchBox = new VBox();
-			// matchBox.getChildren().addAll(teamScore1, submitButton);
-			// VBox matchBox2 = new VBox();
-			// matchBox2.getChildren().addAll(teamScore2, submitButton2);
-			//
-			// //paneOuterMost.getChildren().addAll(matchBox, header);
-			// paneOuterMost.setTop(header);
-			// paneOuterMost.setLeft(matchBox);
-			// //center
-			// paneOuterMost.setRight(matchBox2);
-			// //bottom
-			//
-			// //set properties on controls
-			// //add functionality on controls
-			// //add controls to panels
-			// //root.getChildren().addAll(paneOuterMost);
-			//// root.setLeft(r);
-			//// root.setRight(r);
-			// //root.setTop(header);
-			// root.setCenter(paneOuterMost);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -171,7 +52,7 @@ public class Main extends Application {
 		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
 	}
-	
+
 	private Node makeMatch(String t1, String t2) {
 		VBox match = new VBox();
 		match.getChildren().addAll(makeTeam(t1), makeTeam(t2));
