@@ -25,6 +25,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			ScrollPane scroll = new ScrollPane();
+			
 			GridPane root = new GridPane();
 			int offset = 0;
 			int teamNum = 8;
@@ -100,7 +102,8 @@ public class Main extends Application {
 				// root = newRoot;
 			}
 			root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
-			primaryStage.setScene(new Scene(root));
+			scroll.setContent(root);
+			primaryStage.setScene(new Scene(scroll));
 			primaryStage.setTitle("Tournament Bracket");
 			primaryStage.show();
 		} catch (Exception e) {
