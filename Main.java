@@ -25,6 +25,53 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
+//			BorderPane root = new BorderPane();
+//
+//			int count = 0;
+//			for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
+//				VBox oneColR = new VBox();
+//				VBox oneColL = new VBox();
+//				
+//				int countR = 0;
+//				int countL = 0;
+//				for (int i = 0; i < teamNum / 2; i++) {
+//					Button buttonR = new Button("Score Entry");
+//					VBox right = new VBox();
+//					HBox rightH = new HBox();
+//					// rightH.getBorder().getInsets().
+//					rightH.setSpacing(10);
+//					rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
+//							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
+//
+//					right.getChildren().addAll(makeTeam("RTeam " + countR), makeTeam("RTeam " + (countR + 1)), buttonR);
+//					rightH.getChildren().add(right);
+//					countR = countR +2;
+//					oneColR.getChildren().add(rightH);
+//				}
+//				// right.getChildren().add(makeTeam("RTeam" + i));
+//				// rightH.getChildren().add(right);
+//
+//				for (int i = 0; i < teamNum / 2; i++) {
+//					HBox leftH = new HBox();
+//					VBox left = new VBox();
+//					Button buttonL = new Button("Score Entry");
+//					leftH.setSpacing(10);
+//					leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
+//							+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: red;");
+//					left.getChildren().addAll(makeTeam("LTeam " + countL), makeTeam("LTeam " + (countL+1)), buttonL);
+//					leftH.getChildren().add(left);
+//					countL = countL +2;
+//					oneColL.getChildren().add(leftH);
+//				}
+//
+//				root.setRight(oneColR);
+//				root.setLeft(oneColL);
+//				
+//				BorderPane newRoot = new BorderPane();
+//				newRoot.setCenter(root);
+//				root = newRoot;
+//			}
 
 			GridPane root = new GridPane();
 			int offset = 0;
