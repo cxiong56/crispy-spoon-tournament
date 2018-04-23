@@ -9,7 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,7 +25,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			ScrollPane scroll = new Scroll();
+			ScrollPane scroll = new ScrollPane();
 			
 			GridPane root = new GridPane();
 			int offset = 0;
@@ -121,7 +121,9 @@ public class Main extends Application {
 
 	private Node makeMatch(String t1, String t2) {
 		VBox match = new VBox();
-		match.getChildren().addAll(makeTeam(t1), makeTeam(t2));
+		Button addScore = new Button("Edit Score");
+        	addScore.setOnAction(e -> scoreInput(0,t1,t2));
+		match.getChildren().addAll(makeTeam(t1), makeTeam(t2),addScore);
 		match.setSpacing(10);
 		match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
 				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
