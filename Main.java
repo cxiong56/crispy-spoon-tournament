@@ -160,7 +160,6 @@ public class Main extends Application {
 	private int[] scoreInput(int i,String team1, String team2) {//the input parameter could be match object
         	Stage stage = new Stage();
 		stage.setTitle("Match "+i+": "+team1+" vs. "+team2);
-        	stage.setTitle("Enter Score or TeamA vs TeamB");
         	int []score = new int [2];
         
         	GridPane grid = new GridPane();
