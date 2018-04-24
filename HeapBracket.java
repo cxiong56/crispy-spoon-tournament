@@ -13,6 +13,7 @@ public class HeapBracket {
 	protected int numTeams = 0;
 	protected int numMatches;
 	protected Team[] bracketArray;
+	protected int numRounds;
 	/**
 	 * Generates the correct number of matches based on the number of teams and
 	 * places them in the first round based on their seed value
@@ -43,6 +44,10 @@ public class HeapBracket {
 		
 		numTeams = teamList.size();
 		bracketArray = new Team[(numTeams * 2) - 1];
+		
+		numRounds = (int) (Math.log(numTeams)/Math.log(2));
+		numMatches = numTeams - 1;
+		
 		int indexA = 0;
 		int indexB = numTeams - 1;
 		
@@ -67,7 +72,16 @@ public class HeapBracket {
 	 * @return
 	 */
 	public Match getMatch(int round, int game) {
-		return null;
+		int correctedRound = numRounds - round;
+		int correctedGame = game - 1;
+		int index;
+		if( correctedGame >= (int) Math.pow(2, correctedRound)) {
+			return null;
+		}
+		index = (int) Math.pow(2, correctedRound) - 1 + correctedGame;
+		
+		Match tempMatch = new Match(bracketArray[(index * 2) + 1], bracketArray[(index * 2) + 2]);
+		return tempMatch;
 
 	}
 
@@ -80,7 +94,16 @@ public class HeapBracket {
 	 * @return
 	 */
 	public Match getLeft(int round, int game) {
-		return null;
+		int correctedRound = numRounds - round;
+		int correctedGame = game - 1;
+		int index;
+		if( correctedGame >= (int) Math.pow(2, correctedRound)) {
+			return null;
+		}
+		index = 2 * ((int) Math.pow(2, correctedRound) - 1 + correctedGame) + 1;
+		
+		Match tempMatch = new Match(bracketArray[(index * 2) + 1], bracketArray[(index * 2) + 2]);
+		return tempMatch;
 
 	}
 
@@ -93,8 +116,16 @@ public class HeapBracket {
 	 * @return
 	 */
 	public Match getRight(int round, int game) {
-		return null;
-
+		int correctedRound = numRounds - round;
+		int correctedGame = game - 1;
+		int index;
+		if( correctedGame >= (int) Math.pow(2, correctedRound)) {
+			return null;
+		}
+		index = 2 * ((int) Math.pow(2, correctedRound) - 1 + correctedGame) + 2;
+		
+		Match tempMatch = new Match(bracketArray[(index * 2) + 1], bracketArray[(index * 2) + 2]);
+		return tempMatch;
 	}
 
 	/**
@@ -106,8 +137,16 @@ public class HeapBracket {
 	 * @return
 	 */
 	public Match getParent(int round, int game) {
-		return null;
-
+		int correctedRound = numRounds - round;
+		int correctedGame = game - 1;
+		int index;
+		if( correctedGame >= (int) Math.pow(2, correctedRound)) {
+			return null;
+		}
+		index = (((int) Math.pow(2, correctedRound) - 1 + correctedGame) - 1) / 2;
+		if(index < 0) return null;
+		Match tempMatch = new Match(bracketArray[(index * 2) + 1], bracketArray[(index * 2) + 2]);
+		return tempMatch;
 	}
 
 	/**
@@ -116,7 +155,13 @@ public class HeapBracket {
 	 * @return
 	 */
 	public Iterable<Match> getAllMatches() {
-		return null;
+		List<Match> matches = new ArrayList<Match>();
+		for( int i = 0; i < numRounds; i++) {
+			for( int j = 0; j < (int) Math.pow(2, i); j++) {
+				matches.add( getMatch(i,j));
+			}
+		}
+		return matches;
 
 	}
 }
