@@ -3,7 +3,8 @@ package application;
 public class Team {
 	protected String name;
 	protected int score;
-
+	protected boolean finalized; //idk if we want this but it could be used to see if 
+				    //the score is saved vs initialized to 0;
 	/**
 	 * @param name
 	 * @param score
@@ -27,7 +28,7 @@ public class Team {
 	 * @param score
 	 */
 	public void setScore(int score) {
-
+		this.score = score;
 	}
 
 	/**
@@ -36,7 +37,7 @@ public class Team {
 	 * @return
 	 */
 	public int getScore() {
-		return 0;
+		return score;
 
 	}
 
@@ -45,8 +46,8 @@ public class Team {
 	 * 
 	 * @param score
 	 */
-	public void setName(int score) {
-
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -55,7 +56,23 @@ public class Team {
 	 * @return
 	 */
 	public String getName() {
-		return null;
-
+		return name;
 	}
+	
+	/**
+	 * Finalizes the score so it can be compared
+	 * 
+	 * @return
+	 */
+	 public void finalize() {
+		 finalized = true;
+	 }
+	 
+	 /**
+	  * Used to communicate that the score has been set and finalized
+	  * @return
+	  */
+	 public boolean isFinal() {
+		 return finalized;
+	 }
 }
