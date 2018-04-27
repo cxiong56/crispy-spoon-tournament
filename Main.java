@@ -1,3 +1,11 @@
+package application;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -19,7 +27,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Main extends Application {
-
+	
+	//debug = "on";
+	private static HeapBracket heapBracket;
+	private static Iterable<Match> allMatches;
 	Scene scene1, scene2;
 
 	@Override
@@ -29,13 +40,17 @@ public class Main extends Application {
 			
 			GridPane root = new GridPane();
 			int offset = 0;
-			int teamNum = 8;
+			int teamNum = heapBracket.numTeams;
 			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
 			int min = 0;
 			for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2) {
-				for (int i = 0; i < tn; i++) {
-					root.add(makeMatch("ALTeam" + i, "BLTeam" + i), min, i + offset);
-					root.add(makeMatch("ARTeam" + i, "BRTeam" + i), max, i + offset);
+				for (int i = (tn -1); i > heapBracket.bracketArray.length; i++) {
+					String team1 = heapBracket.bracketArray[i].getName();
+					String team2 = heapBracket.bracketArray[i +1].getName();
+					root.add(makeMatch(team1, team2), min, i + offset);
+					String team3 = heapBracket.bracketArray[i].getName();
+					String team4 = heapBracket.bracketArray[i +1].getName();
+					root.add(makeMatch(team3, team4), max, i + offset);
 				}
 
 				// primaryStage.setTitle("Tentative Tournament Bracket");
@@ -113,7 +128,7 @@ public class Main extends Application {
 		}
 	}
 
-	private Node makeTeam(String string) {
+	protected Node makeTeam(String string) {
 		VBox team = new VBox();
 		TextField enterScores = new TextField();
 		enterScores.setPromptText("Final Score");
@@ -121,7 +136,7 @@ public class Main extends Application {
 		return team;
 	}
 
-	private Node makeMatch(String t1, String t2) {
+	protected Node makeMatch(String t1, String t2) {
 		VBox match = new VBox();
 		Button addScore = new Button("Edit Score");
         	addScore.setOnAction(e -> scoreInput(0,t1,t2));
@@ -175,7 +190,24 @@ public class Main extends Application {
 		return score;
 	}
 
-	public static void main(String[] args) {
-		launch(args);
+	public static void main(String[] args) throws IOException {
+		//read input file
+		try {
+			Scanner in = new Scanner(System.in);
+			System.out.println("What is the filename? ");
+			String input = in.nextLine();
+			File inputFile = new File(input);
+			heapBracket = new HeapBracket(inputFile);
+			Team[] teamArray = heapBracket.bracketArray;
+			//add all of the matches and team to the bracket
+			allMatches = heapBracket.getAllMatches();
+			
+			launch(args);
+			
+		} catch (IOException e) {
+			return;
+		}
+		
+		//launch(args);
 	}
 }
