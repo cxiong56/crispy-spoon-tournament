@@ -1,17 +1,18 @@
 package application;
 
 public class Team {
-	protected String name;
-	protected int score;
-	protected boolean finalized; //idk if we want this but it could be used to see if 
-				    //the score is saved vs initialized to 0;
+	private String name;
+	private int score;
+	private int seed;
+	private boolean finalized; 
+
 	/**
 	 * @param name
 	 * @param score
 	 */
-	public Team(String name, int score) {
+	public Team(String name, int seed) {
 		this.name = name;
-		this.score = score;
+		this.seed = seed;
 	}
 
 	/**
@@ -58,21 +59,30 @@ public class Team {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Finalizes the score so it can be compared
 	 * 
 	 * @return
 	 */
-	 public void finalize() {
-		 finalized = true;
-	 }
-	 
-	 /**
-	  * Used to communicate that the score has been set and finalized
-	  * @return
-	  */
-	 public boolean isFinal() {
-		 return finalized;
-	 }
+	public void finalize() {
+		finalized = true;
+	}
+
+	/**
+	 * Used to communicate that the score has been set and finalized
+	 * 
+	 * @return
+	 */
+	public boolean isFinal() {
+		return finalized;
+	}
+
+	public void setSeed(int x) {
+		seed = x;
+	}
+
+	public int getSeed() {
+		return seed;
+	}
 }

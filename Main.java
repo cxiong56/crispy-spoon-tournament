@@ -2,6 +2,11 @@ package application;
 
 import java.io.File;
 import java.io.IOException; 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -34,84 +39,19 @@ public class Main extends Application {
 			ScrollPane scroll = new ScrollPane();
 
 			GridPane root = new GridPane();
-			int offset = 0;
-			int teamNum = heapBracket.numTeams;
-			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
-			int min = 0;
-			for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2) {
-				for (int i = (tn - 1); i > heapBracket.bracketArray.length; i++) {
-					String team1 = heapBracket.bracketArray[i].getName();
-					String team2 = heapBracket.bracketArray[i + 1].getName();
-					root.add(makeMatch(team1, team2), min, i + offset);
-					String team3 = heapBracket.bracketArray[i].getName();
-					String team4 = heapBracket.bracketArray[i + 1].getName();
-					root.add(makeMatch(team3, team4), max, i + offset);
-				}
-
-				// primaryStage.setTitle("Tentative Tournament Bracket");
-				// BorderPane root = new BorderPane();
-				//
-				// int count = 0;
-				// for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
-				// VBox oneColR = new VBox();
-				// VBox oneColL = new VBox();
-				//
-				// int countR = 0;
-				// int countL = 0;
-				// for (int i = 0; i < teamNum / 2; i++) {
-				// final int match = i+1;
-				// final int teami = count;
-				// Button buttonR = new Button("Score Entry");
-				// buttonR.setOnAction(e -> scoreInput(match,"RTeam " +
-				// teami,"RTeam " + teami + 1));
-				// VBox right = new VBox();
-				// HBox rightH = new HBox();
-				// // rightH.getBorder().getInsets().
-				// rightH.setSpacing(10);
-				// rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
-				// inside;" + "-fx-border-width: 5;"
-				// + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
-				// "-fx-border-color: blue;");
-				//
-				// right.getChildren().addAll(makeTeam("RTeam " + countR),
-				// makeTeam("RTeam " + (countR + 1)), buttonR);
-				// rightH.getChildren().add(right);
-				// countR = countR +2;
-				// oneColR.getChildren().add(rightH);
-				// }
-				// // right.getChildren().add(makeTeam("RTeam" + i));
-				// // rightH.getChildren().add(right);
-				//
-				// for (int i = 0; i < teamNum / 2; i++) {
-				// HBox leftH = new HBox();
-				// VBox left = new VBox();
-				//
-				// final int match = i+1;
-				// final int teami = count;
-				// Button buttonL = new Button("Score Entry");
-				// buttonL.setOnAction(e -> scoreInput(match,"LTeam " +
-				// teami,"LTeam " + teami + 1));
-				//
-				// leftH.setSpacing(10);
-				// leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
-				// inside;" + "-fx-border-width: 5;"
-				// + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
-				// "-fx-border-color: red;");
-				// left.getChildren().addAll(makeTeam("LTeam " + countL),
-				// makeTeam("LTeam " + (countL+1)), buttonL);
-				// leftH.getChildren().add(left);
-				// countL = countL +2;
-				// oneColL.getChildren().add(leftH);
-				// }
-				//
-				// root.setRight(oneColR);
-				// root.setLeft(oneColL);
-				//
-				// BorderPane newRoot = new BorderPane();
-				// newRoot.setCenter(root);
-				// root = newRoot;
+			int leftCol = 0;
+			int rightCol = heapBracket.numRounds() * 2 + 1;
+			int padding = 0;
+			for (int curRound = heapBracket.numRounds(); curRound > 0; curRound--, leftCol++, rightCol--, padding += heapBracket.numInRound(curRound) / 4) {
+				List<Match> round = heapBracket.getRound(curRound);
+				int left = 0;
+				int right = round.size() / 2;
+				for ( ; left < right; left++)
+					root.add(makeMatch(round.get(left)), leftCol, left + padding);
+				for ( ; right < round.size(); right++)
+					root.add(makeMatch(round.get(right)), rightCol, right - left + padding);
 			}
-			root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
+
 			scroll.setContent(root);
 			primaryStage.setScene(new Scene(scroll));
 			primaryStage.setHeight(800);
@@ -129,6 +69,16 @@ public class Main extends Application {
 		enterScores.setPromptText("0");
 		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
+	}
+	
+	private Node makeMatch(Match m) {
+		if (m != null)
+			return makeMatch(m.team1(), m.team2());
+		return makeMatch("", "");
+	}
+
+	private Node makeMatch(Team team1, Team team2) {
+		return makeMatch(team1.getName(), team2.getName());
 	}
 
 	protected Node makeMatch(String t1, String t2) {
@@ -192,12 +142,94 @@ public class Main extends Application {
 		String input = in.nextLine();
 		File inputFile = new File(input);
 		heapBracket = new HeapBracket(inputFile);
-		Team[] teamArray = heapBracket.bracketArray;
+		//Team[] teamArray = heapBracket.bracketArray;
 		// add all of the matches and team to the bracket
-		allMatches = heapBracket.getAllMatches();
+		//allMatches = heapBracket.getAllMatches();
 
 		launch(args);
 
 		// launch(args);
 	}
 }
+
+//int offset = 0;
+//int teamNum = 0;//heapBracket.numTeams;
+//int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
+//int min = 0;
+//int round = 1;
+//for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2, round++) {
+	
+	
+//	for (int i = (tn - 1); i > heapBracket.bracketArray.length; i++) {
+//		String team1 = heapBracket.bracketArray[i].getName();
+//		String team2 = heapBracket.bracketArray[i + 1].getName();
+//		root.add(makeMatch(team1, team2), min, i + offset);
+//		String team3 = heapBracket.bracketArray[i].getName();
+//		String team4 = heapBracket.bracketArray[i + 1].getName();
+//		root.add(makeMatch(team3, team4), max, i + offset);
+//	}
+
+	// primaryStage.setTitle("Tentative Tournament Bracket");
+	// BorderPane root = new BorderPane();
+	//
+	// int count = 0;
+	// for (int teamNum = 2; teamNum <= 8; teamNum *= 2) {
+	// VBox oneColR = new VBox();
+	// VBox oneColL = new VBox();
+	//
+	// int countR = 0;
+	// int countL = 0;
+	// for (int i = 0; i < teamNum / 2; i++) {
+	// final int match = i+1;
+	// final int teami = count;
+	// Button buttonR = new Button("Score Entry");
+	// buttonR.setOnAction(e -> scoreInput(match,"RTeam " +
+	// teami,"RTeam " + teami + 1));
+	// VBox right = new VBox();
+	// HBox rightH = new HBox();
+	// // rightH.getBorder().getInsets().
+	// rightH.setSpacing(10);
+	// rightH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
+	// inside;" + "-fx-border-width: 5;"
+	// + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
+	// "-fx-border-color: blue;");
+	//
+	// right.getChildren().addAll(makeTeam("RTeam " + countR),
+	// makeTeam("RTeam " + (countR + 1)), buttonR);
+	// rightH.getChildren().add(right);
+	// countR = countR +2;
+	// oneColR.getChildren().add(rightH);
+	// }
+	// // right.getChildren().add(makeTeam("RTeam" + i));
+	// // rightH.getChildren().add(right);
+	//
+	// for (int i = 0; i < teamNum / 2; i++) {
+	// HBox leftH = new HBox();
+	// VBox left = new VBox();
+	//
+	// final int match = i+1;
+	// final int teami = count;
+	// Button buttonL = new Button("Score Entry");
+	// buttonL.setOnAction(e -> scoreInput(match,"LTeam " +
+	// teami,"LTeam " + teami + 1));
+	//
+	// leftH.setSpacing(10);
+	// leftH.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
+	// inside;" + "-fx-border-width: 5;"
+	// + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
+	// "-fx-border-color: red;");
+	// left.getChildren().addAll(makeTeam("LTeam " + countL),
+	// makeTeam("LTeam " + (countL+1)), buttonL);
+	// leftH.getChildren().add(left);
+	// countL = countL +2;
+	// oneColL.getChildren().add(leftH);
+	// }
+	//
+	// root.setRight(oneColR);
+	// root.setLeft(oneColL);
+	//
+	// BorderPane newRoot = new BorderPane();
+	// newRoot.setCenter(root);
+	// root = newRoot;
+
+//root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
