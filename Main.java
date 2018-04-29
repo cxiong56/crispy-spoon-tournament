@@ -41,7 +41,7 @@ public class Main extends Application {
 
 			GridPane root = new GridPane();
 			int offset = 0;
-			int teamNum = heapBracket.numTeams;
+			int teamNum = 0;//heapBracket.numTeams;
 			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
 			int min = 0;
 			int round = 1;
@@ -201,9 +201,9 @@ public class Main extends Application {
 		String input = in.nextLine();
 		File inputFile = new File(input);
 		heapBracket = new HeapBracket(inputFile);
-		Team[] teamArray = heapBracket.bracketArray;
+		//Team[] teamArray = heapBracket.bracketArray;
 		// add all of the matches and team to the bracket
-		allMatches = heapBracket.getAllMatches();
+		//allMatches = heapBracket.getAllMatches();
 
 		launch(args);
 

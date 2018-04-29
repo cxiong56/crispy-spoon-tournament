@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class HeapBracket {
@@ -25,11 +26,24 @@ public class HeapBracket {
 		inputReader.close();
 		
 		numMatches = teams.size() - 1;
-		numRounds = (int) (Math.log(teams.size()) / Math.log(2)) + 1;
+		numRounds = (int) (Math.log(teams.size()) / Math.log(2));
+		matches = new Match[numMatches];
 		
+		int roundStart = (int) (Math.pow(2, numRounds - 1)) - 1;
 		for (int a = 0, b = teams.size() - 1; a < b; a++, b--) {
-			Match m = new Match(teams.get(a), teams.get(b), 0);
+			matches[roundStart + a] = new Match(teams.get(a), teams.get(b), 0);
 		}
+		Iterator<Match> r = getRound(3);
+		System.out.println(r);
+	}
+	
+	public Iterator<Match> getRound(int roundNum) {
+		List<Match> round = new ArrayList<Match>();
+		int numInRound = (int) (Math.pow(2, roundNum - 1));
+		int roundStart = numInRound - 1;
+		for (int i = 0; i < numInRound; i++)
+			round.add(matches[roundStart + i]);
+		return round.iterator();
 	}
 	
 //
