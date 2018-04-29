@@ -15,13 +15,17 @@ public class HeapBracket {
 	private int numMatches;
 	private int numRounds;
 	
+	
 	public HeapBracket(File inputFile) throws IOException {
-		List<String> teams = new ArrayList<String>();
+		List<Team> teams = new ArrayList<Team>();
 		BufferedReader inputReader = new BufferedReader(new FileReader(inputFile));
+		int temp = 1;
 		while(inputReader.ready()) {
 			String in = inputReader.readLine();
+			
 			if (in != null)
-				teams.add(in);
+				teams.add(new Team(in, temp));
+			temp++;
 		}
 		inputReader.close();
 		
@@ -51,6 +55,8 @@ public class HeapBracket {
 	public int numInRound(int round) {
 		return (int) (Math.pow(2, round - 1));
 	}
+	
+}
 	
 //
 //	protected int numTeams = 0;
@@ -223,4 +229,4 @@ public class HeapBracket {
 //		}
 //		return roundList;
 //	}
-}
+
