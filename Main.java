@@ -1,19 +1,13 @@
 package application;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.IOException; 
 import java.util.Scanner;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
-import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,8 +18,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class Main extends Application {
 
@@ -132,15 +126,15 @@ public class Main extends Application {
 	protected Node makeTeam(String string) {
 		VBox team = new VBox();
 		TextField enterScores = new TextField();
-		enterScores.setPromptText("Final Score");
+		enterScores.setPromptText("0");
 		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
 	}
 
 	protected Node makeMatch(String t1, String t2) {
 		VBox match = new VBox();
-		Button addScore = new Button("Edit Score");
-		addScore.setOnAction(e -> scoreInput(0, t1, t2));
+		Button addScore = new Button("Final Score");
+		addScore.setOnAction(e -> FinalScoreConfirm(0, t1, t2));
 		match.getChildren().addAll(makeTeam(t1), makeTeam(t2), addScore);
 		match.setSpacing(10);
 		match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
@@ -148,47 +142,47 @@ public class Main extends Application {
 		return match;
 	}
 
-	private int[] scoreInput(int i, String team1, String team2) {// the input
-																	// parameter
-																	// could be
-																	// match
-																	// object
+	private static boolean answer; //cant seem to find a simpler solution to this
+	private boolean FinalScoreConfirm(int i, String team1, String team2) {
+	    
 		Stage stage = new Stage();
-		stage.setTitle("Match " + i + ": " + team1 + " vs. " + team2);
-		int[] score = new int[2];
-
-		GridPane grid = new GridPane();
-		grid.setPadding(new Insets(10, 10, 10, 10));
-		grid.setVgap(8);
-		grid.setHgap(10);
-
-		// TeamA
-		Label teamA = new Label(team1);
-		TextField score1 = new TextField("0");
-		GridPane.setConstraints(teamA, 0, 0);
-		GridPane.setConstraints(score1, 1, 0);
-
-		// TeamB
-		Label teamB = new Label(team2);
-		TextField score2 = new TextField("0");
-		GridPane.setConstraints(teamB, 0, 1);
-		GridPane.setConstraints(score2, 1, 1);
-
-		// Confirm Button
-		Button confirm = new Button("Add");
-		confirm.setOnAction(e -> {
-			System.out.println("get text, parse, throw errors, and store in array");
-			stage.close();
-		});
-		GridPane.setConstraints(confirm, 1, 2);
-
-		grid.getChildren().addAll(teamA, score1, teamB, score2, confirm);
-
-		Scene scene = new Scene(grid, 300, 200);
-		stage.setScene(scene);
-		stage.show();
-
-		return score;
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setTitle("Confirm Final Score");
+		stage.setMinWidth(300);
+		stage.setMinHeight(250);
+		String matchInfo = team1 + "\t(0) vs. " + team2 + "\t(0)"; 
+		Label label = new Label(matchInfo);
+		Label label2 = new Label("Are you sure?");
+		Label label3 = new Label("Scores entered are final and immutable.");
+		
+		//yes no button
+        Button yes = new Button("Yes");
+        Button no = new Button("No");
+        
+        yes.setOnAction(e -> {
+            answer = true;
+            stage.close();
+        });
+        no.setOnAction(e -> {
+            answer = false;
+            stage.close();
+        });
+        
+        
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label,label2, label3);
+        layout.setAlignment(Pos.CENTER);
+        HBox yesNO = new HBox(10);
+        yesNO.setAlignment(Pos.CENTER);
+        yesNO.getChildren().addAll(yes,no);
+        BorderPane trueLayout = new BorderPane();
+        trueLayout.setCenter(layout);
+        trueLayout.setBottom(yesNO);
+        Scene scene = new Scene(trueLayout);
+        stage.setScene(scene);
+        stage.showAndWait();
+		
+		return answer;
 	}
 
 	public static void main(String[] args) throws IOException {
