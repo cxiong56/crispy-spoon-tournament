@@ -14,6 +14,11 @@ public class HeapBracket {
 	protected int numMatches;
 	protected Team[] bracketArray;
 	protected int numRounds;
+	
+	public HeapBracket(File inputFile) {
+		buildBracket(inputFile);
+	}
+	
 	/**
 	 * Generates the correct number of matches based on the number of teams and
 	 * places them in the first round based on their seed value

@@ -1,4 +1,5 @@
 package application;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,8 +28,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Main extends Application {
-	
-	//debug = "on";
+
+	// debug = "on";
 	private static HeapBracket heapBracket;
 	private static Iterable<Match> allMatches;
 	Scene scene1, scene2;
@@ -37,19 +38,19 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			ScrollPane scroll = new ScrollPane();
-			
+
 			GridPane root = new GridPane();
 			int offset = 0;
 			int teamNum = heapBracket.numTeams;
 			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
 			int min = 0;
 			for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2) {
-				for (int i = (tn -1); i > heapBracket.bracketArray.length; i++) {
+				for (int i = (tn - 1); i > heapBracket.bracketArray.length; i++) {
 					String team1 = heapBracket.bracketArray[i].getName();
-					String team2 = heapBracket.bracketArray[i +1].getName();
+					String team2 = heapBracket.bracketArray[i + 1].getName();
 					root.add(makeMatch(team1, team2), min, i + offset);
 					String team3 = heapBracket.bracketArray[i].getName();
-					String team4 = heapBracket.bracketArray[i +1].getName();
+					String team4 = heapBracket.bracketArray[i + 1].getName();
 					root.add(makeMatch(team3, team4), max, i + offset);
 				}
 
@@ -120,7 +121,7 @@ public class Main extends Application {
 			scroll.setContent(root);
 			primaryStage.setScene(new Scene(scroll));
 			primaryStage.setHeight(800);
-           		primaryStage.setWidth(1250);
+			primaryStage.setWidth(1250);
 			primaryStage.setTitle("Tournament Bracket");
 			primaryStage.show();
 		} catch (Exception e) {
@@ -139,8 +140,8 @@ public class Main extends Application {
 	protected Node makeMatch(String t1, String t2) {
 		VBox match = new VBox();
 		Button addScore = new Button("Edit Score");
-        	addScore.setOnAction(e -> scoreInput(0,t1,t2));
-		match.getChildren().addAll(makeTeam(t1), makeTeam(t2),addScore);
+		addScore.setOnAction(e -> scoreInput(0, t1, t2));
+		match.getChildren().addAll(makeTeam(t1), makeTeam(t2), addScore);
 		match.setSpacing(10);
 		match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
 				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
@@ -191,23 +192,18 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) throws IOException {
-		//read input file
-		try {
-			Scanner in = new Scanner(System.in);
-			System.out.println("What is the filename? ");
-			String input = in.nextLine();
-			File inputFile = new File(input);
-			heapBracket = new HeapBracket(inputFile);
-			Team[] teamArray = heapBracket.bracketArray;
-			//add all of the matches and team to the bracket
-			allMatches = heapBracket.getAllMatches();
-			
-			launch(args);
-			
-		} catch (IOException e) {
-			return;
-		}
-		
-		//launch(args);
+		// read input file
+		Scanner in = new Scanner(System.in);
+		System.out.println("What is the filename? ");
+		String input = in.nextLine();
+		File inputFile = new File(input);
+		heapBracket = new HeapBracket(inputFile);
+		Team[] teamArray = heapBracket.bracketArray;
+		// add all of the matches and team to the bracket
+		allMatches = heapBracket.getAllMatches();
+
+		launch(args);
+
+		// launch(args);
 	}
 }
