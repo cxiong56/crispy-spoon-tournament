@@ -1,9 +1,9 @@
 package application;
 
 public class Team {
-	protected String name;
-	protected int score;
-	protected int seed;
+	private String name;
+	private int score;
+	private int seed;
 
 	/**
 	 * @param name
