@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javafx.application.Application;
@@ -41,13 +42,16 @@ public class Main extends Application {
 
 			GridPane root = new GridPane();
 			int leftCol = 0;
-			int rightCol = heapBracket.numRounds() + 1;
-			for (int curRound = heapBracket.numRounds(); curRound > 0; curRound--, leftCol++, rightCol--) {
-				int i = 0;
-				for (Match m : heapBracket.getRound(curRound)) {
-					root.add(makeMatch(m), leftCol, i);
-					i++;
-				}
+			int rightCol = heapBracket.numRounds() * 2 + 1;
+			int padding = 0;
+			for (int curRound = heapBracket.numRounds(); curRound > 0; curRound--, leftCol++, rightCol--, padding += heapBracket.numInRound(curRound) / 4) {
+				List<Match> round = heapBracket.getRound(curRound);
+				int left = 0;
+				int right = round.size() / 2;
+				for ( ; left < right; left++)
+					root.add(makeMatch(round.get(left)), leftCol, left + padding);
+				for ( ; right < round.size(); right++)
+					root.add(makeMatch(round.get(right)), rightCol, right - left + padding);
 			}
 //			int offset = 0;
 //			int teamNum = 0;//heapBracket.numTeams;
