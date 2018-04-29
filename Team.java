@@ -23,10 +23,20 @@ public class Team {
 		this.seed = seed;
 		this.score = 0;
 	}
+	/**
+	 * Sets the team's original seed
+	 * 
+	 * @param seed
+	 */
 	public void setSeed(int seed){
 		this.seed = seed;
 	}
 	
+	/**
+	 * Returns the teams seed
+	 * 
+	 * @return seed
+	 */
 	public int getSeed(){
 		return seed;
 	}
@@ -42,7 +52,7 @@ public class Team {
 	/**
 	 * Returns the teams current score
 	 * 
-	 * @return
+	 * @return score
 	 */
 	public int getScore() {
 		return score;
@@ -68,4 +78,3 @@ public class Team {
 
 	}
 }
-
