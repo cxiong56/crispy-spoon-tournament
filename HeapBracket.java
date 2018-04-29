@@ -33,17 +33,23 @@ public class HeapBracket {
 		for (int a = 0, b = teams.size() - 1; a < b; a++, b--) {
 			matches[roundStart + a] = new Match(teams.get(a), teams.get(b), 0);
 		}
-		Iterator<Match> r = getRound(3);
-		System.out.println(r);
 	}
 	
-	public Iterator<Match> getRound(int roundNum) {
+	public List<Match> getRound(int roundNum) {
 		List<Match> round = new ArrayList<Match>();
-		int numInRound = (int) (Math.pow(2, roundNum - 1));
+		int numInRound = numInRound(roundNum);
 		int roundStart = numInRound - 1;
 		for (int i = 0; i < numInRound; i++)
 			round.add(matches[roundStart + i]);
-		return round.iterator();
+		return round;
+	}
+	
+	public int numRounds() {
+		return numRounds;
+	}
+	
+	public int numInRound(int round) {
+		return (int) (Math.pow(2, round - 1));
 	}
 	
 //

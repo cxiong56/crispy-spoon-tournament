@@ -40,12 +40,21 @@ public class Main extends Application {
 			ScrollPane scroll = new ScrollPane();
 
 			GridPane root = new GridPane();
-			int offset = 0;
-			int teamNum = 0;//heapBracket.numTeams;
-			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
-			int min = 0;
-			int round = 1;
-			for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2, round++) {
+			int leftCol = 0;
+			int rightCol = heapBracket.numRounds() + 1;
+			for (int curRound = heapBracket.numRounds(); curRound > 0; curRound--, leftCol++, rightCol--) {
+				int i = 0;
+				for (Match m : heapBracket.getRound(curRound)) {
+					root.add(makeMatch(m), leftCol, i);
+					i++;
+				}
+			}
+//			int offset = 0;
+//			int teamNum = 0;//heapBracket.numTeams;
+//			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
+//			int min = 0;
+//			int round = 1;
+//			for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2, round++) {
 				
 				
 //				for (int i = (tn - 1); i > heapBracket.bracketArray.length; i++) {
@@ -119,7 +128,7 @@ public class Main extends Application {
 				// BorderPane newRoot = new BorderPane();
 				// newRoot.setCenter(root);
 				// root = newRoot;
-			}
+			
 			//root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
 			scroll.setContent(root);
 			primaryStage.setScene(new Scene(scroll));
@@ -138,6 +147,16 @@ public class Main extends Application {
 		enterScores.setPromptText("Final Score");
 		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
+	}
+	
+	private Node makeMatch(Match m) {
+		if (m != null)
+			return makeMatch(m.team1(), m.team2());
+		return makeMatch("", "");
+	}
+
+	private Node makeMatch(Team team1, Team team2) {
+		return makeMatch(team1.toString(), team2.toString());
 	}
 
 	protected Node makeMatch(String t1, String t2) {

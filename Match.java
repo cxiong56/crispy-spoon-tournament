@@ -37,6 +37,14 @@ public class Match {
 		this.team2 = team2;
 		this.matchNum = 0;
 	}
+	
+	public Team team1() {
+		return team1;
+	}
+	
+	public Team team2() {
+		return team2;
+	}
 
 	/**
 	 * Compares the scores of the two teams if finalized and returns the team with
