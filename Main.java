@@ -44,15 +44,18 @@ public class Main extends Application {
 			int teamNum = heapBracket.numTeams;
 			int max = (int) (Math.log(teamNum) / Math.log(2)) * 2;
 			int min = 0;
-			for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2) {
-				for (int i = (tn - 1); i > heapBracket.bracketArray.length; i++) {
-					String team1 = heapBracket.bracketArray[i].getName();
-					String team2 = heapBracket.bracketArray[i + 1].getName();
-					root.add(makeMatch(team1, team2), min, i + offset);
-					String team3 = heapBracket.bracketArray[i].getName();
-					String team4 = heapBracket.bracketArray[i + 1].getName();
-					root.add(makeMatch(team3, team4), max, i + offset);
-				}
+			int round = 1;
+			for (int tn = teamNum; tn >= 2; min++, max--, offset += tn / 4, tn /= 2, round++) {
+				
+				
+//				for (int i = (tn - 1); i > heapBracket.bracketArray.length; i++) {
+//					String team1 = heapBracket.bracketArray[i].getName();
+//					String team2 = heapBracket.bracketArray[i + 1].getName();
+//					root.add(makeMatch(team1, team2), min, i + offset);
+//					String team3 = heapBracket.bracketArray[i].getName();
+//					String team4 = heapBracket.bracketArray[i + 1].getName();
+//					root.add(makeMatch(team3, team4), max, i + offset);
+//				}
 
 				// primaryStage.setTitle("Tentative Tournament Bracket");
 				// BorderPane root = new BorderPane();
@@ -117,7 +120,7 @@ public class Main extends Application {
 				// newRoot.setCenter(root);
 				// root = newRoot;
 			}
-			root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
+			//root.add(makeMatch("ChampA", "ChampB"), min, teamNum / 2 - 1);
 			scroll.setContent(root);
 			primaryStage.setScene(new Scene(scroll));
 			primaryStage.setHeight(800);
