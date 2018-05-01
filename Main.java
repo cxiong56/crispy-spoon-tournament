@@ -67,6 +67,12 @@ public class Main extends Application {
 		VBox team = new VBox();
 		TextField enterScores = new TextField();
 		enterScores.setPromptText("0");
+		enterScores.setOnAction(e -> {
+			
+			int score = Integer.valueOf(enterScores.getText());
+			heapBracket.getTeam(string).setScore(score);
+			
+		});
 		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
 	}
@@ -84,7 +90,11 @@ public class Main extends Application {
 	protected Node makeMatch(String t1, String t2) {
 		VBox match = new VBox();
 		Button addScore = new Button("Final Score");
-		addScore.setOnAction(e -> FinalScoreConfirm(0, t1, t2));
+		
+		addScore.setOnAction( e -> 
+			//need to be able to get match number here to change the scores
+			FinalScoreConfirm(0, t1, t2)
+		);
 		match.getChildren().addAll(makeTeam(t1), makeTeam(t2), addScore);
 		match.setSpacing(10);
 		match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
@@ -100,7 +110,7 @@ public class Main extends Application {
 		stage.setTitle("Confirm Final Score");
 		stage.setMinWidth(300);
 		stage.setMinHeight(250);
-		String matchInfo = team1 + "\t(0) vs. " + team2 + "\t(0)"; 
+		String matchInfo = team1 + "\t("+heapBracket.getTeam(team1).getScore()+") vs. " + team2 + "\t("+heapBracket.getTeam(team2).getScore()+")"; 
 		Label label = new Label(matchInfo);
 		Label label2 = new Label("Are you sure?");
 		Label label3 = new Label("Scores entered are final and immutable.");
@@ -111,6 +121,8 @@ public class Main extends Application {
         
         yes.setOnAction(e -> {
             answer = true;
+            //delete final score button
+            //update the bracket
             stage.close();
         });
         no.setOnAction(e -> {
@@ -142,7 +154,9 @@ public class Main extends Application {
 		String input = in.nextLine();
 		File inputFile = new File(input);
 		heapBracket = new HeapBracket(inputFile);
-		//Team[] teamArray = heapBracket.bracketArray;
+		List<Team> teamArray = heapBracket.teams;
+		String team1 = teamArray.get(0).getName();
+		int score1 = heapBracket.getTeam(team1).getScore();
 		// add all of the matches and team to the bracket
 		//allMatches = heapBracket.getAllMatches();
 
