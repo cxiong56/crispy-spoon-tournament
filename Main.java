@@ -78,7 +78,7 @@ public class Main extends Application {
 	}
 
 	private Node makeMatch(Team team1, Team team2) {
-		return makeMatch(team1.getName(), team2.getName());
+		return makeMatch(team1 != null ? team1.getName() : "", team2 != null ? team2.getName() : "");
 	}
 
 	protected Node makeMatch(String t1, String t2) {
