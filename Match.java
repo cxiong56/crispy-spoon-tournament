@@ -19,12 +19,6 @@ public class Match {
 		this.team2 = team2;
 		this.matchNum = num;
 	}
-	
-	public Match(String team1, String team2, int num) {
-		this.team1 = new Team(team1);
-		this.team2 = new Team(team2);
-		this.matchNum = num;
-	}
 
 	/**
 	 * Creates a new match between two teams
@@ -38,12 +32,20 @@ public class Match {
 		this.matchNum = 0;
 	}
 	
-	public Team team1() {
+	public Team getTeam1() {
 		return team1;
 	}
 	
-	public Team team2() {
+	public void setTeam1(Team t) {
+		team1 = t;
+	}
+	
+	public Team getTeam2() {
 		return team2;
+	}
+	
+	public void setTeam2(Team t) {
+		team2 = t;
 	}
 
 	/**
@@ -59,7 +61,7 @@ public class Match {
 		else if (score2 > score1)
 			return team2;
 		else
-			return team1;
+			return null;
 	}
 	
 	public String toString() {

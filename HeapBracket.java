@@ -34,6 +34,9 @@ public class HeapBracket {
 		matches = new Match[numMatches];
 		
 		int roundStart = (int) (Math.pow(2, numRounds - 1)) - 1;
+		for (int i = 0; i < roundStart; i++) {
+			matches[i] = new Match(null, null, 0);
+		}
 		for (int a = 0, b = teams.size() - 1; a < b; a++, b--) {
 			matches[roundStart + a] = new Match(teams.get(a), teams.get(b), 0);
 		}
@@ -56,6 +59,26 @@ public class HeapBracket {
 		return (int) (Math.pow(2, round - 1));
 	}
 	
+	public void update() {
+		for (int curRound = numRounds - 1; curRound >= 0; curRound--) {
+			int roundStart = numInRound(curRound) - 1;
+			for (int curMatch = 0; curMatch < numInRound(curRound); curMatch++) {
+				int index = roundStart + curMatch;
+				if (matches[getLeft(index)] != null && matches[getLeft(index)].getWinner() != null)
+					matches[index].setTeam1(matches[getLeft(index)].getWinner());
+				if (matches[getRight(index)] != null && matches[getRight(index)].getWinner() != null)
+					matches[index].setTeam2(matches[getRight(index)].getWinner());
+			}
+		}
+	}
+	
+	private int getLeft(int index) {
+		return (index + 1) * 2;
+	}
+	
+	private int getRight(int index) {
+		return getLeft(index) + 1;
+	}
 }
 	
 //

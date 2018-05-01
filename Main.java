@@ -73,7 +73,7 @@ public class Main extends Application {
 	
 	private Node makeMatch(Match m) {
 		if (m != null)
-			return makeMatch(m.team1(), m.team2());
+			return makeMatch(m.getTeam1(), m.getTeam2());
 		return makeMatch("", "");
 	}
 
