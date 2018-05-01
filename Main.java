@@ -163,9 +163,9 @@ public class Main extends Application {
                     if (results == true) {
                         m.setScore1(s1);
                         m.setScore2(s2);
-                        answer1 = results;
                         stage.close();
                     } 
+                    answer1 = results;
                 } catch (NumberFormatException error) {
                     errorAlert(error.getMessage(),"Please enter positive Integers only");
                 }
@@ -178,8 +178,9 @@ public class Main extends Application {
         }
         Scene scene = new Scene(trueLayout);
         stage.setScene(scene);
+        stage.setOnCloseRequest(e -> answer1 = false);//For when user close through "x" button
         stage.showAndWait();
-
+        
         return answer1;
     }
 
@@ -224,6 +225,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(trueLayout);
         stage.setScene(scene);
+        stage.setOnCloseRequest(e -> answer2 = false);
         stage.showAndWait();
         return answer2;
     }
