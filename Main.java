@@ -71,11 +71,19 @@ public class Main extends Application {
 			
 			int score = Integer.valueOf(enterScores.getText());
 			heapBracket.getTeam(string).setScore(score);
-			
+			System.out.println(heapBracket.getTeam(string).getScore());
 		});
 		team.getChildren().addAll(new Label(string), enterScores);
 		return team;
 	}
+	
+//	protected Node finalizeTeam(String string, int i) {
+//		VBox team = new VBox();
+//		Label score = new Label(Integer.toString(heapBracket.getTeam(string).getScore()));
+//		
+//		team.getChildren().addAll(new Label(string), score);
+//		return team;
+//	}
 	
 	private Node makeMatch(Match m) {
 		if (m != null)
@@ -93,7 +101,8 @@ public class Main extends Application {
 		
 		addScore.setOnAction( e -> 
 			//need to be able to get match number here to change the scores
-			FinalScoreConfirm(0, t1, t2)
+			FinalScoreConfirm(heapBracket.getMatchNumber(t1), t1, t2)
+			
 		);
 		match.getChildren().addAll(makeTeam(t1), makeTeam(t2), addScore);
 		match.setSpacing(10);
@@ -101,6 +110,11 @@ public class Main extends Application {
 				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 		return match;
 	}
+//	protected Node finalizeMatch(int i, String team1, String team2) {
+//		VBox match = new VBox();
+//		match.getChildren().addAll(finalizeTeam(team1, i), finalizeTeam(team2, i));
+//		return match;
+//	}
 
 	private static boolean answer; //cant seem to find a simpler solution to this
 	private boolean FinalScoreConfirm(int i, String team1, String team2) {
@@ -121,6 +135,8 @@ public class Main extends Application {
         
         yes.setOnAction(e -> {
             answer = true;
+//          finalizeMatch(i,team1,team2);
+            
             //delete final score button
             //update the bracket
             stage.close();
