@@ -11,13 +11,13 @@ import java.util.List;
 
 public class HeapBracket {
 	
-	private Match[] matches;
+	Match[] matches;
 	private int numMatches;
 	private int numRounds;
-	
+	protected List<Team> teams;
 	
 	public HeapBracket(File inputFile) throws IOException {
-		List<Team> teams = new ArrayList<Team>();
+		teams = new ArrayList<Team>();
 		BufferedReader inputReader = new BufferedReader(new FileReader(inputFile));
 		int temp = 1;
 		while(inputReader.ready()) {
@@ -41,7 +41,19 @@ public class HeapBracket {
 			matches[roundStart + a] = new Match(teams.get(a), teams.get(b), 0);
 		}
 	}
-	
+	public Team getTeam(String name) {
+		//compare name give to names of the teams in the array
+		for(int i = 0; i < teams.size(); i++) {
+			if(name.equals(teams.get(i).getName())) {
+				return teams.get(i);
+			}
+			else {
+				//loop
+			}
+		}
+		return null;
+		
+	}
 	public List<Match> getRound(int roundNum) {
 		List<Match> round = new ArrayList<Match>();
 		int numInRound = numInRound(roundNum);
@@ -252,4 +264,3 @@ public class HeapBracket {
 //		}
 //		return roundList;
 //	}
-
