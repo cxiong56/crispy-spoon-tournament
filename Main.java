@@ -163,6 +163,7 @@ public class Main extends Application {
                     if (results == true) {
                         m.setScore1(s1);
                         m.setScore2(s2);
+                        answer1 = results;
                         stage.close();
                     } 
                 } catch (NumberFormatException error) {
@@ -198,6 +199,7 @@ public class Main extends Application {
         Label label3 = new Label("Scores entered are final and immutable.");
 
         //yes no button
+
         Button yes = new Button("Yes");
         Button no = new Button("No");
 

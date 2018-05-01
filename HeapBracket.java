@@ -91,6 +91,18 @@ public class HeapBracket {
 	private int getRight(int index) {
 		return getLeft(index) + 1;
 	}
+	public int getMatchNumber(String team) {
+		int match = 0;
+		for(int i = 1; i < matches.length; i++) {
+				if(matches[i].getTeam1().getName()==(team) || matches[i].getTeam2().getName()==(team)) {
+					match = i;
+					System.out.println(match);
+			}
+		
+	}
+		return match;
+}
+	
 }
 	
 //
