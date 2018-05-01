@@ -40,12 +40,32 @@ public class Match {
 		team1 = t;
 	}
 	
+	public void setScore1(int s) {
+	    score1 = s;
+	}
+	
+	public int getScore1() {
+	    return score1;
+	}
+	
 	public Team getTeam2() {
 		return team2;
 	}
 	
 	public void setTeam2(Team t) {
 		team2 = t;
+	}
+	
+	public void setScore2(int s) {
+        score2 = s;
+    }
+	
+	public int getScore2() {
+	    return score2;
+	}
+	
+	public int getNum() {
+	    return matchNum;
 	}
 
 	/**
@@ -61,11 +81,11 @@ public class Match {
 		else if (score2 > score1)
 			return team2;
 		else
-			return null;
+			return null;//handle ties
 	}
 	
 	public String toString() {
-		return team1 + " vs. " + team2;
+		return team1.getName() + " vs. " + team2.getName() ;
 	}
 
 }
