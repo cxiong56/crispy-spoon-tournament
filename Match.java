@@ -6,6 +6,7 @@ public class Match {
 	private Team team2;
 	private int score2;
 	private int matchNum;
+	private boolean finalized = false;
 
 	/**
 	 * Creates a new match between two teams
@@ -86,6 +87,14 @@ public class Match {
 	
 	public String toString() {
 		return team1.getName() + " vs. " + team2.getName() ;
+	}
+	
+	public void finalize() {
+	    finalized = true;
+	}
+	
+	public boolean isFinal() {
+	    return finalized;
 	}
 
 }

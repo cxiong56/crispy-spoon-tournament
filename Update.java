@@ -58,17 +58,14 @@ public class Update {
 				addScore.setDisable(true);
 		});
 		match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()));
-		if (t1 != "" || t2 != "") {
+		if (t1 != "" || t2 != "") {//button only appears if there is at least a team
 			match.getChildren().add(addScore);
 		} else {
-			match.getChildren().add(new Label("                        "));// to
-																			// give
-																			// the
-																			// empty
-																			// bracket
-																			// a
-																			// body
+		    //to give the empty bracket a body
+			match.getChildren().add(new Label("                        "));
 		}
+		
+		addScore.setDisable(m.isFinal());
 		match.setSpacing(10);
 		match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
 				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
@@ -139,41 +136,25 @@ public class Update {
 					s2 = Integer.parseInt(score2.getText());
 					if (s1 < 0 || s2 < 0) {
 						throw new NumberFormatException();
+					}else if (s1 == s2) {
+					    throw new IllegalArgumentException();
 					}
 
 					boolean results = confirmScore(m, s1, s2);
 					if (results == true) {
 						m.setScore1(s1);
 						m.setScore2(s2);
+						m.finalize();
+		                Main.update();
 						stage.close();
 					}
 					answer1 = results;
 				} catch (NumberFormatException error) {
-					errorAlert(error.getMessage(), "Please enter positive Integers only.");
-				}
-				//handle ties
-				int e1 = 0, e2 = 0;
-				try {
-					e1 = Integer.parseInt(score1.getText());
-					e2 = Integer.parseInt(score2.getText());
-					if (e1 == e2) {
-						throw new NumberFormatException();
-					}
-
-					boolean results = confirmScore(m, s1, s2);
-					if (results == true) {
-						m.setScore1(s1);
-						m.setScore2(s2);
-						stage.close();
-					}
-					answer1 = results;
-				} catch (NumberFormatException error) {
-					errorAlert(error.getMessage(), "Ties not allowed. Please enter vaild scores.");
+					errorAlert(error.getLocalizedMessage(), error.getMessage()+"\nPlease enter positive Integers only.");
+				} catch (IllegalArgumentException error2) {
+				    errorAlert(error2.getMessage(),"Ties not allowed. Please enter valid scores.");
 				}
 				
-				m.setScore1(s1);
-				m.setScore2(s2);
-				Main.update();
 			});
 
 			GridPane.setConstraints(confirm, 1, 2);
