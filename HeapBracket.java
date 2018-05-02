@@ -35,10 +35,10 @@ public class HeapBracket {
 
 		int roundStart = (int) (Math.pow(2, numRounds - 1)) - 1;
 		for (int i = 0; i < roundStart; i++) {
-			matches[i] = new Match(null, null, 0);
+			matches[i] = new Match(null, null, i);
 		}
 		for (int a = 0, b = teams.size() - 1; a < b; a++, b--) {
-			matches[roundStart + a] = new Match(teams.get(a), teams.get(b), 0);
+			matches[roundStart + a] = new Match(teams.get(a), teams.get(b), roundStart + a);
 		}
 	}
 
@@ -73,20 +73,37 @@ public class HeapBracket {
 	}
 
 	public static void update() {
-		for (int curRound = numRounds - 1; curRound >= 0; curRound--) {
-			int roundStart = numInRound(curRound) - 1;
-			for (int curMatch = 0; curMatch < numInRound(curRound); curMatch++) {
-				int index = roundStart + curMatch;
-				if (matches[getLeft(index)] != null && matches[getLeft(index)].getWinner() != null)
-					matches[index].setTeam1(matches[getLeft(index)].getWinner());
-				if (matches[getRight(index)] != null && matches[getRight(index)].getWinner() != null)
-					matches[index].setTeam2(matches[getRight(index)].getWinner());
+		for (int index = matches.length - 1; index >= 0; index--) {
+			Match l = null, r = null;
+			try {
+				l = matches[getLeft(index)];
+				r = matches[getRight(index)];
+			} catch (ArrayIndexOutOfBoundsException e) {
+				continue;
 			}
+			if (l.getWinner() != null)
+				matches[index].setTeam1(l.getWinner());
+			else
+				matches[index].setTeam1(null);
+			if (r.getWinner() != null)
+				matches[index].setTeam2(r.getWinner());
+			else
+				matches[index].setTeam2(null);
 		}
+//		for (int curRound = numRounds - 1; curRound >= 0; curRound--) {
+//			int roundStart = numInRound(curRound) - 1;
+//			for (int curMatch = 0; curMatch < numInRound(curRound); curMatch++) {
+//				int index = roundStart + curMatch;
+//				if (matches[getLeft(index)] != null && matches[getLeft(index)].getWinner() != null)
+//					matches[index].setTeam1(matches[getLeft(index)].getWinner());
+//				if (matches[getRight(index)] != null && matches[getRight(index)].getWinner() != null)
+//					matches[index].setTeam2(matches[getRight(index)].getWinner());
+//			}
+//		}
 	}
 
 	private static int getLeft(int index) {
-		return (index + 1) * 2;
+		return (index + 1) * 2 - 1;
 	}
 
 	private static int getRight(int index) {

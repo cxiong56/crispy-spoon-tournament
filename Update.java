@@ -49,7 +49,7 @@ public class Update {
 
 	private static Node makeMatch(String t1, String t2, Match m) {
 		VBox match = new VBox();
-		Button addScore = new Button("Add Score");
+		Button addScore = new Button("Add Score" + m.getNum());
 
 		addScore.setOnAction(e -> {
 			// need to be able to get match number here to change the scores

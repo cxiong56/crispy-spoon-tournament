@@ -46,7 +46,7 @@ public class Main extends Application {
 	}
 	
 	static void update() {
-		System.out.println("holla @ ya boi");
+		HeapBracket.update();
 		ScrollPane scroll = new ScrollPane();
 		scroll.setContent(Update.drawGUI());
 		primaryStage.setScene(new Scene(scroll));
