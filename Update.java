@@ -149,8 +149,28 @@ public class Update {
 					}
 					answer1 = results;
 				} catch (NumberFormatException error) {
-					errorAlert(error.getMessage(), "Please enter positive Integers only");
+					errorAlert(error.getMessage(), "Please enter positive Integers only.");
 				}
+				//handle ties
+				int e1 = 0, e2 = 0;
+				try {
+					e1 = Integer.parseInt(score1.getText());
+					e2 = Integer.parseInt(score2.getText());
+					if (e1 == e2) {
+						throw new NumberFormatException();
+					}
+
+					boolean results = confirmScore(m, s1, s2);
+					if (results == true) {
+						m.setScore1(s1);
+						m.setScore2(s2);
+						stage.close();
+					}
+					answer1 = results;
+				} catch (NumberFormatException error) {
+					errorAlert(error.getMessage(), "Ties not allowed. Please enter vaild scores.");
+				}
+				
 				m.setScore1(s1);
 				m.setScore2(s2);
 				Main.update();
