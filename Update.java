@@ -51,7 +51,7 @@ public class Update {
 
         addScore.setOnAction( e -> {
             //need to be able to get match number here to change the scores
-            boolean result = Main.finalScoreEdit(m);
+            boolean result = finalScoreEdit(m);
             if (result == true)//final score recorded
                 addScore.setDisable(true);
         });
