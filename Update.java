@@ -150,9 +150,9 @@ public class Update {
 					}
 					answer1 = results;
 				} catch (NumberFormatException error) {
-					errorAlert(error.getLocalizedMessage(), error.getMessage()+"\nPlease enter positive Integers only.");
+					errorAlert("NumberFormatException", error.getMessage()+"\nPlease enter positive Integers only.");
 				} catch (IllegalArgumentException error2) {
-				    errorAlert(error2.getMessage(),"Ties not allowed. Please enter valid scores.");
+				    errorAlert("IllegalArgumentException",error2.getMessage()+"\nTies not allowed. Please enter valid scores.");
 				}
 				
 			});
