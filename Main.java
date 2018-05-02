@@ -36,12 +36,16 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		ScrollPane scroll = new ScrollPane();
-		scroll.setContent(Update.drawGUI(heapBracket));
+		scroll.setContent(Update.drawGUI());
 		primaryStage.setScene(new Scene(scroll));
 		primaryStage.setHeight(800);
 		primaryStage.setWidth(1250);
 		primaryStage.setTitle("Tournament Bracket");
 		primaryStage.show();
+	}
+	
+	void update() {
+		
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -50,7 +54,7 @@ public class Main extends Application {
 		System.out.println("What is the filename? ");
 		String input = in.nextLine();
 		File inputFile = new File(input);
-		heapBracket = new HeapBracket(inputFile);
+		heapBracket.setupHeapBracket(inputFile);
 		List<Team> teamArray = heapBracket.teams;
 		String team1 = teamArray.get(0).getName();
 		int score1 = heapBracket.getTeam(team1).getScore();

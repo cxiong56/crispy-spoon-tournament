@@ -17,56 +17,64 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Update {
-	
-	public static Node drawGUI(HeapBracket heapBracket) {
-		 GridPane root = new GridPane();
-         int leftCol = 0;
-         int rightCol = heapBracket.numRounds() * 2 + 1;
-         int padding = 0;
-         for (int curRound = heapBracket.numRounds(); curRound > 0; curRound--, leftCol++, rightCol--, padding += heapBracket.numInRound(curRound) / 4) {
-             List<Match> round = heapBracket.getRound(curRound);
-             int left = 0;
-             int right = round.size() / 2;
-             for ( ; left < right; left++)
-                 root.add(makeMatch(round.get(left)), leftCol, left + padding);
-             for ( ; right < round.size(); right++)
-                 root.add(makeMatch(round.get(right)), rightCol, right - left + padding);
-         }
-         return root;
+
+	public static Node drawGUI() {
+		GridPane root = new GridPane();
+		int leftCol = 0;
+		int rightCol = HeapBracket.numRounds() * 2 + 1;
+		int padding = 0;
+		for (int curRound = HeapBracket
+				.numRounds(); curRound > 0; curRound--, leftCol++, rightCol--, padding += HeapBracket
+						.numInRound(curRound) / 4) {
+			List<Match> round = HeapBracket.getRound(curRound);
+			int left = 0;
+			int right = round.size() / 2;
+			for (; left < right; left++)
+				root.add(makeMatch(round.get(left)), leftCol, left + padding);
+			for (; right < round.size(); right++)
+				root.add(makeMatch(round.get(right)), rightCol, right - left + padding);
+		}
+		return root;
 	}
-	
+
 	private static Node makeMatch(Match m) {
-        if (m != null)
-            return makeMatch(m.getTeam1(), m.getTeam2(),m);
-        return makeMatch("", "",m);
-    }
+		if (m != null)
+			return makeMatch(m.getTeam1(), m.getTeam2(), m);
+		return makeMatch("", "", m);
+	}
 
-    private static Node makeMatch(Team team1, Team team2, Match m) {
-        return makeMatch(team1 != null ? team1.getName() : "", team2 != null ? team2.getName() : "",m);
-    }
+	private static Node makeMatch(Team team1, Team team2, Match m) {
+		return makeMatch(team1 != null ? team1.getName() : "", team2 != null ? team2.getName() : "", m);
+	}
 
-    private static Node makeMatch(String t1, String t2, Match m) {
-        VBox match = new VBox();
-        Button addScore = new Button("Add Score");
+	private static Node makeMatch(String t1, String t2, Match m) {
+		VBox match = new VBox();
+		Button addScore = new Button("Add Score");
 
-        addScore.setOnAction( e -> {
-            //need to be able to get match number here to change the scores
-            boolean result = finalScoreEdit(m);
-            if (result == true)//final score recorded
-                addScore.setDisable(true);
-        });
-        match.getChildren().addAll(makeTeam(t1), makeTeam(t2));
-        if (t1 != "" || t2 != "") {
-            match.getChildren().add(addScore);
-        } else {
-            match.getChildren().add(new Label("                        "));//to give the empty bracket a body
-        }
-        match.setSpacing(10);
-        match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
-                        + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
-        return match;
-    }
-    
+		addScore.setOnAction(e -> {
+			// need to be able to get match number here to change the scores
+			boolean result = finalScoreEdit(m);
+			if (result == true)// final score recorded
+				addScore.setDisable(true);
+		});
+		match.getChildren().addAll(makeTeam(t1), makeTeam(t2));
+		if (t1 != "" || t2 != "") {
+			match.getChildren().add(addScore);
+		} else {
+			match.getChildren().add(new Label("                        "));// to
+																			// give
+																			// the
+																			// empty
+																			// bracket
+																			// a
+																			// body
+		}
+		match.setSpacing(10);
+		match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
+				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
+		return match;
+	}
+
 	private static Node makeTeam(String string) {
 		HBox team = new HBox();
 		Label scores = new Label("   ");
@@ -77,7 +85,6 @@ public class Update {
 		team.getChildren().addAll(new Label(string), scores);
 		return team;
 	}
-
 
 	private static boolean answer1; // cant seem to find a simpler solution to
 									// this
