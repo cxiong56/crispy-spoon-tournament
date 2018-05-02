@@ -57,7 +57,7 @@ public class Update {
 			if (result == true)// final score recorded
 				addScore.setDisable(true);
 		});
-		match.getChildren().addAll(makeTeam(t1), makeTeam(t2));
+		match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()));
 		if (t1 != "" || t2 != "") {
 			match.getChildren().add(addScore);
 		} else {
@@ -75,14 +75,14 @@ public class Update {
 		return match;
 	}
 
-	private static Node makeTeam(String string) {
+	private static Node makeTeam(String teamName, int score) {
 		HBox team = new HBox();
 		Label scores = new Label("   ");
-		if (string != "") {
-			scores.setText("\t\t(0)");
+		if (teamName != "") {
+			scores.setText("\t\t(" + score + ")");
 		}
 
-		team.getChildren().addAll(new Label(string), scores);
+		team.getChildren().addAll(new Label(teamName), scores);
 		return team;
 	}
 
@@ -133,7 +133,7 @@ public class Update {
 					errorAlert("Error", "Please fill in the scores for both teams");
 				}
 
-				int s1, s2;
+				int s1 = 0, s2 = 0;
 				try {
 					s1 = Integer.parseInt(score1.getText());
 					s2 = Integer.parseInt(score2.getText());
@@ -151,7 +151,9 @@ public class Update {
 				} catch (NumberFormatException error) {
 					errorAlert(error.getMessage(), "Please enter positive Integers only");
 				}
-
+				m.setScore1(s1);
+				m.setScore2(s2);
+				Main.update();
 			});
 
 			GridPane.setConstraints(confirm, 1, 2);

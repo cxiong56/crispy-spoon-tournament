@@ -31,10 +31,11 @@ public class Main extends Application {
 	// debug = "on";
 	private static HeapBracket heapBracket;
 	private static Iterable<Match> allMatches;
-	Scene scene1, scene2;
+	private static Stage primaryStage;
 
 	@Override
 	public void start(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 		ScrollPane scroll = new ScrollPane();
 		scroll.setContent(Update.drawGUI());
 		primaryStage.setScene(new Scene(scroll));
@@ -44,8 +45,15 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 	
-	void update() {
-		
+	static void update() {
+		System.out.println("holla @ ya boi");
+		ScrollPane scroll = new ScrollPane();
+		scroll.setContent(Update.drawGUI());
+		primaryStage.setScene(new Scene(scroll));
+		primaryStage.setHeight(800);
+		primaryStage.setWidth(1250);
+		primaryStage.setTitle("Tournament Bracket");
+		primaryStage.show();
 	}
 
 	public static void main(String[] args) throws IOException {
