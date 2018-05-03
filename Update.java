@@ -29,7 +29,7 @@ public class Update {
 			List<Match> round = HeapBracket.getRound(curRound);
 			int left = 0;
 			int right = round.size() / 2;
-			for (; left < right; left++)
+			for (; left < right; left++)				
 				root.add(makeMatch(round.get(left)), leftCol, left + padding);
 			for (; right < round.size(); right++)
 				root.add(makeMatch(round.get(right)), rightCol, right - left + padding);
@@ -150,9 +150,9 @@ public class Update {
 					}
 					answer1 = results;
 				} catch (NumberFormatException error) {
-					errorAlert("NumberFormatException", error.getMessage()+"\nPlease enter positive Integers only.");
+					errorAlert("NumberFormatException", "Please enter positive Integers only.");
 				} catch (IllegalArgumentException error2) {
-				    errorAlert("IllegalArgumentException",error2.getMessage()+"\nTies not allowed. Please enter valid scores.");
+				    errorAlert("IllegalArgumentException", "Ties not allowed. Please enter valid scores.");
 				}
 				
 			});
