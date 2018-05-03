@@ -75,7 +75,20 @@ public class Update {
 			if (result == true)// final score recorded
 				addScore.setDisable(true);
 		});
-		match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()));
+		if(m.getNum() == 0) {
+			Label winner = new Label("Winner: ");
+//			winner.setStyle("-fx-color: red");
+			if(m.isFinal()) {
+				winner.setText(winner.getText() + m.getWinner().getName());
+				winner.setFont(Font.font("Verdana", 20));
+				
+				
+			}
+			match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()), winner);
+		}
+		else {
+			match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()));
+		}
 		if (t1 != null && t2 != null) {//button only appears if there is at least a team
 			match.getChildren().add(addScore);
 		} else {
