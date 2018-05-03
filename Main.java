@@ -29,8 +29,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	// debug = "on";
-	private static HeapBracket heapBracket;
-	private static Iterable<Match> allMatches;
 	private static Stage primaryStage;
 
 	@Override
@@ -62,10 +60,7 @@ public class Main extends Application {
 		System.out.println("What is the filename? ");
 		String input = in.nextLine();
 		File inputFile = new File(input);
-		heapBracket.setupHeapBracket(inputFile);
-		List<Team> teamArray = heapBracket.teams;
-		String team1 = teamArray.get(0).getName();
-		int score1 = heapBracket.getTeam(team1).getScore();
+		HeapBracket.setupHeapBracket(inputFile);
 		// add all of the matches and team to the bracket
 		// allMatches = heapBracket.getAllMatches();
 

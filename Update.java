@@ -40,16 +40,12 @@ public class Update {
 	private static Node makeMatch(Match m) {
 		if (m != null)
 			return makeMatch(m.getTeam1(), m.getTeam2(), m);
-		return makeMatch("", "", m);
+		return makeMatch(null, null, m);
 	}
 
-	private static Node makeMatch(Team team1, Team team2, Match m) {
-		return makeMatch(team1 != null ? team1.getName() : "", team2 != null ? team2.getName() : "", m);
-	}
-
-	private static Node makeMatch(String t1, String t2, Match m) {
+	private static Node makeMatch(Team t1, Team t2, Match m) {
 		VBox match = new VBox();
-		Button addScore = new Button("Add Score" + m.getNum());
+		Button addScore = new Button("Add Score");
 
 		addScore.setOnAction(e -> {
 			// need to be able to get match number here to change the scores
@@ -58,7 +54,7 @@ public class Update {
 				addScore.setDisable(true);
 		});
 		match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()));
-		if (t1 != "" || t2 != "") {//button only appears if there is at least a team
+		if (t1 != null && t2 != null) {//button only appears if there is at least a team
 			match.getChildren().add(addScore);
 		} else {
 		    //to give the empty bracket a body
@@ -72,15 +68,17 @@ public class Update {
 		return match;
 	}
 
-	private static Node makeTeam(String teamName, int score) {
-		HBox team = new HBox();
+	private static Node makeTeam(Team team, int score) {
+		if (team == null)
+			return new HBox();
+		HBox teamBox = new HBox();
 		Label scores = new Label("   ");
-		if (teamName != "") {
+		if (team.getName() != "") {
 			scores.setText("\t\t(" + score + ")");
 		}
 
-		team.getChildren().addAll(new Label(teamName), scores);
-		return team;
+		teamBox.getChildren().addAll(new Label(team.getSeed() + ". " + team.getName()), scores);
+		return teamBox;
 	}
 
 	private static boolean answer1; // cant seem to find a simpler solution to

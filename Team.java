@@ -24,34 +24,6 @@ public class Team {
 	}
 
 	/**
-	 * Sets the team's current score
-	 * 
-	 * @param score
-	 */
-	public void setScore(int score) {
-		this.score = score;
-	}
-
-	/**
-	 * Returns the teams current score
-	 * 
-	 * @return
-	 */
-	public int getScore() {
-		return score;
-
-	}
-
-	/**
-	 * Changes the name
-	 * 
-	 * @param score
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
 	 * Returns the team name
 	 * 
 	 * @return
@@ -76,10 +48,6 @@ public class Team {
 	 */
 	public boolean isFinal() {
 		return finalized;
-	}
-
-	public void setSeed(int x) {
-		seed = x;
 	}
 
 	public int getSeed() {
