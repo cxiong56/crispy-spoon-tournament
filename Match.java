@@ -85,6 +85,15 @@ public class Match {
 			return null;//handle ties
 	}
 	
+	public Team getLoser() {
+		if (score1 < score2)
+			return team1;
+		else if (score2 > score1)
+			return team2;
+		else
+			return null;//handle ties
+	}
+	
 	public String toString() {
 		return team1.getName() + " vs. " + team2.getName() ;
 	}

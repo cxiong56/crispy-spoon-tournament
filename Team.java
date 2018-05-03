@@ -53,4 +53,8 @@ public class Team {
 	public int getSeed() {
 		return seed;
 	}
+	
+	public String toString() {
+		return getName();
+	}
 }

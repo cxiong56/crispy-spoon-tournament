@@ -125,5 +125,46 @@ public class HeapBracket {
 		}
 		return match;
 	}
+	
+	public static Team getWinner() {
+		if (matches[0] != null)
+			return matches[0].getWinner();
+		return null;
+	}
 
+	public static Team getSecondPlace() {
+		if (matches[0] != null)
+			return matches[0].getLoser();
+		return null;
+	}
+	
+	public static Team getThirdPlace() {
+		Team[] teams = new Team[4];
+		int[] scores = new int[4];
+		if (!matches[1].isFinal() || !matches[2].isFinal())
+			return null;
+		if (matches[1] != null) {
+			Match m = matches[1];
+			teams[0] = m.getTeam1();
+			scores[0] = m.getScore1();
+			teams[1] = m.getTeam2();
+			scores[1] = m.getScore2();
+		}
+		if (matches[2] != null) {
+			Match m = matches[2];
+			teams[2] = m.getTeam1();
+			scores[2] = m.getScore1();
+			teams[3] = m.getTeam2();
+			scores[3] = m.getScore2();
+		}
+		Team third = null;
+		int maxScore = 0;
+		for (int i = 0; i < teams.length; i++) {
+			if (scores[i] > maxScore) {
+				maxScore = scores[i];
+				third = teams[i];
+			}
+		}
+		return third;
+	}
 }

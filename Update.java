@@ -22,25 +22,26 @@ public class Update {
 
 	public static Node drawGUI() {
 		GridPane root = new GridPane();
+//		for (int i = 0; i <= 100; i++)
+//			for (int j = 0; j <= 100; j++)
+//				root.add(new Label(i + "," + j), i, j);
 		int leftCol = 0;
-		int rightCol = HeapBracket.numRounds() * 2 + 1;
-		int padding = 0;
+		int rightCol = (HeapBracket.numRounds() - 1) * 2 + 1;
+		int padding = 10;
 		int count = 1;
 		Label title = new Label();
-		if(HeapBracket.teams.size() <= 0) {
+		if (HeapBracket.teams.size() <= 0) {
 			title.setText("No Teams, So no Tournament.");
 			title.setTextFill(Color.web("#0076a3"));
 			title.setStyle("-fx-font-weight: bold");
-		}
-		else if(HeapBracket.teams.size() == 1) {
+		} else if (HeapBracket.teams.size() == 1) {
 			title.setText("Only one team.\nWinner: " + HeapBracket.teams.get(0).getName());
 			title.setTextFill(Color.web("#0076a3"));
 			title.setStyle("-fx-font-weight: bold");
-		}
-		else {
-		title.setText("Welcome to Your Bracket");
-		title.setTextFill(Color.web("#0076a3"));
-		title.setStyle("-fx-font-weight: bold");
+		} else {
+			title.setText("Welcome to Your Bracket");
+			title.setTextFill(Color.web("#0076a3"));
+			title.setStyle("-fx-font-weight: bold");
 		}
 		root.add(title, 0, 0);
 		for (int curRound = HeapBracket
@@ -62,14 +63,15 @@ public class Update {
 			List<Match> round = HeapBracket.getRound(curRound);
 			int left = 0;
 			int right = round.size() / 2;
-			
-			//root.add(child, columnIndex, rowIndex);
+
+			// root.add(child, columnIndex, rowIndex);
 			for (; left < right; left++)
-				root.add(makeMatch(round.get(left)), leftCol, left + padding +10);
+				root.add(makeMatch(round.get(left)), leftCol, left + padding);
 			for (; right < round.size(); right++)
-				root.add(makeMatch(round.get(right)), rightCol, right - left + padding +10);
+				root.add(makeMatch(round.get(right)), rightCol, right - left + padding);
 			count++;
 		}
+		root.add(makePodium(), rightCol + 1, padding + 1);
 		return root;
 	}
 
@@ -89,28 +91,28 @@ public class Update {
 			if (result == true)// final score recorded
 				addScore.setDisable(true);
 		});
-		if(m.getNum() == 0) {
+		if (m.getNum() == 0) {
 			Label winner = new Label("Winner: ");
-//			
-			if(m.isFinal()) {
+			//
+			if (m.isFinal()) {
 				winner.setText(winner.getText() + m.getWinner().getName());
 				winner.setFont(Font.font("Verdana", 20));
 				winner.setTextFill(Color.web("#8B0000"));
 				winner.setStyle("-fx-font-weight: bold");
-				
+
 			}
 			match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()), winner);
-		}
-		else {
+		} else {
 			match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()));
 		}
-		if (t1 != null && t2 != null) {//button only appears if there is at least a team
+		if (t1 != null && t2 != null) {// button only appears if there is at
+										// least a team
 			match.getChildren().add(addScore);
 		} else {
-		    //to give the empty bracket a body
+			// to give the empty bracket a body
 			match.getChildren().add(new Label("                        "));
 		}
-		
+
 		addScore.setDisable(m.isFinal());
 		match.setSpacing(10);
 		match.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
@@ -182,8 +184,8 @@ public class Update {
 					s2 = Integer.parseInt(score2.getText());
 					if (s1 < 0 || s2 < 0) {
 						throw new NumberFormatException();
-					}else if (s1 == s2) {
-					    throw new IllegalArgumentException();
+					} else if (s1 == s2) {
+						throw new IllegalArgumentException();
 					}
 
 					boolean results = confirmScore(m, s1, s2);
@@ -191,16 +193,16 @@ public class Update {
 						m.setScore1(s1);
 						m.setScore2(s2);
 						m.finalize();
-		                Main.update();
+						Main.update();
 						stage.close();
 					}
 					answer1 = results;
 				} catch (NumberFormatException error) {
 					errorAlert("NumberFormatException", "Please enter positive Integers only.");
 				} catch (IllegalArgumentException error2) {
-				    errorAlert("IllegalArgumentException", "Ties not allowed. Please enter valid scores.");
+					errorAlert("IllegalArgumentException", "Ties not allowed. Please enter valid scores.");
 				}
-				
+
 			});
 
 			GridPane.setConstraints(confirm, 1, 2);
@@ -286,5 +288,13 @@ public class Update {
 		window.setScene(scene);
 		java.awt.Toolkit.getDefaultToolkit().beep();// alert sound
 		window.showAndWait();// display and wait until the window is closed
+	}
+
+	private static Node makePodium() {
+		VBox podium = new VBox();
+		podium.getChildren().add(new Label("1st place: " + HeapBracket.getWinner()));
+		podium.getChildren().add(new Label("2nd place: " + HeapBracket.getSecondPlace()));
+		podium.getChildren().add(new Label("3rd place: " + HeapBracket.getThirdPlace()));
+		return podium;
 	}
 }

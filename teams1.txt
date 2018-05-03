@@ -6,11 +6,3 @@ serve
 coach
 exception
 monk
-haunt
-camp
-invite
-residence
-beginning
-suppress
-column
-wonder
