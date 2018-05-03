@@ -23,16 +23,37 @@ public class Update {
 		int leftCol = 0;
 		int rightCol = HeapBracket.numRounds() * 2 + 1;
 		int padding = 0;
+		int count = 1;
+		Label title = new Label();
+		title.setText("Welcome to Your Bracket");
+		title.setTextFill(Color.web("#0076a3"));
+		title.setStyle("-fx-font-weight: bold");
+		root.add(title, 0, 0);
 		for (int curRound = HeapBracket
 				.numRounds(); curRound > 0; curRound--, leftCol++, rightCol--, padding += HeapBracket
 						.numInRound(curRound) / 4) {
+			Label label1 = new Label();
+			Label label2 = new Label();
+			if(curRound == 1) {
+				label2.setText("Final Game"); //Championship Game
+				root.add(label2, rightCol, 5);
+			}
+			else {
+				label1.setText("Round "+count);
+				label2.setText("Round "+count);
+				root.add(label1, leftCol, 5);
+				root.add(label2, rightCol, 5);
+			}
 			List<Match> round = HeapBracket.getRound(curRound);
 			int left = 0;
 			int right = round.size() / 2;
-			for (; left < right; left++)				
-				root.add(makeMatch(round.get(left)), leftCol, left + padding);
+			
+			//root.add(child, columnIndex, rowIndex);
+			for (; left < right; left++)
+				root.add(makeMatch(round.get(left)), leftCol, left + padding +10);
 			for (; right < round.size(); right++)
-				root.add(makeMatch(round.get(right)), rightCol, right - left + padding);
+				root.add(makeMatch(round.get(right)), rightCol, right - left + padding +10);
+			count++;
 		}
 		return root;
 	}
