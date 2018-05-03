@@ -37,11 +37,11 @@ public class Update {
 			Label label1 = new Label();
 			Label label2 = new Label();
 			if (curRound == 1) {
-				label2.setText("Final Game"); // Championship Game
+				label2.setText("\t  Final Game"); // Championship Game
 				root.add(label2, rightCol, 5);
 			} else {
-				label1.setText("Round " + count);
-				label2.setText("Round " + count);
+				label1.setText("\t  Round " + count);
+				label2.setText("\t  Round " + count);
 				root.add(label1, leftCol, 5);
 				root.add(label2, rightCol, 5);
 			}
@@ -122,9 +122,7 @@ public class Update {
 
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setTitle("Match " + m.getNum());
-		stage.setMinWidth(300);
-		stage.setMinHeight(250);
+		stage.setTitle("Match :" + m.toString());
 		GridPane trueLayout = new GridPane();
 		trueLayout.setPadding(new Insets(10, 10, 10, 10));
 		trueLayout.setVgap(8);
@@ -197,6 +195,9 @@ public class Update {
 		stage.setScene(scene);
 		stage.setOnCloseRequest(e -> answer1 = false);// For when user close
 														// through "x" button
+		
+		stage.setMinWidth(stage.getWidth());
+        stage.setMinHeight(stage.getHeight());
 		stage.showAndWait();
 
 		return answer1;
@@ -208,8 +209,6 @@ public class Update {
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Confirm Final Score");
-		stage.setMinWidth(300);
-		stage.setMinHeight(250);
 		BorderPane trueLayout = new BorderPane();
 
 		String matchInfo = m.getTeam1().getName() + "\t\t(" + s1 + ")\n" + m.getTeam2().getName() + "\t\t(" + s2 + ")";
@@ -243,7 +242,10 @@ public class Update {
 		Scene scene = new Scene(trueLayout);
 		stage.setScene(scene);
 		stage.setOnCloseRequest(e -> answer2 = false);
+		stage.setMinWidth(stage.getWidth());
+        stage.setMinHeight(stage.getHeight());
 		stage.showAndWait();
+		
 		return answer2;
 	}
 

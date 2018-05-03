@@ -37,10 +37,11 @@ public class Main extends Application {
 		ScrollPane scroll = new ScrollPane();
 		scroll.setContent(Update.drawGUI());
 		primaryStage.setScene(new Scene(scroll));
-		primaryStage.setHeight(800);
-		primaryStage.setWidth(1250);
 		primaryStage.setTitle("Tournament Bracket");
 		primaryStage.show();
+		
+		primaryStage.setMinHeight(primaryStage.getHeight());
+        primaryStage.setMinWidth(primaryStage.getWidth());
 	}
 	
 	static void update() {
@@ -48,10 +49,10 @@ public class Main extends Application {
 		ScrollPane scroll = new ScrollPane();
 		scroll.setContent(Update.drawGUI());
 		primaryStage.setScene(new Scene(scroll));
-		primaryStage.setHeight(800);
-		primaryStage.setWidth(1250);
 		primaryStage.setTitle("Tournament Bracket");
 		primaryStage.show();
+		primaryStage.setMinHeight(primaryStage.getHeight());
+        primaryStage.setMinWidth(primaryStage.getWidth());
 	}
 
 	public static void main(String[] args) throws IOException {
