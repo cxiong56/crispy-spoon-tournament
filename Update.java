@@ -77,11 +77,11 @@ public class Update {
 		});
 		if (m.getNum() == 0) {
 			Label winner = new Label("Winner: ");
-			// winner.setStyle("-fx-color: red");
 			if (m.isFinal()) {
 				winner.setText(winner.getText() + m.getWinner().getName());
 				winner.setFont(Font.font("Verdana", 20));
-
+				winner.setTextFill(Color.web("#8B0000"));
+				winner.setStyle("-fx-font-weight: bold");
 			}
 			match.getChildren().addAll(makeTeam(t1, m.getScore1()), makeTeam(t2, m.getScore2()), winner);
 		} else {
