@@ -19,6 +19,12 @@
 
 package application;
 
+/**
+ * This object is used to store basic team info
+ * such as name, seed, and if its score is finalized
+ * @author Henry
+ *
+ */
 public class Team {
 	private String name;
 	private int seed;
@@ -66,11 +72,18 @@ public class Team {
 	public boolean isFinal() {
 		return finalized;
 	}
-
+	
+	/**
+	 * 
+	 * @return the see seed postion of the team
+	 */
 	public int getSeed() {
 		return seed;
 	}
 	
+	/**
+	 * Returns the result of getName() which is the team name
+	 */
 	public String toString() {
 		return getName();
 	}
