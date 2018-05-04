@@ -201,6 +201,9 @@ public class HeapBracket {
 	 * Returns the team that got third place in the tournament.
 	 */
 	public static Team getThirdPlace() {
+		if (!matches[0].isFinal())
+			return null;
+		
 		// Create array of the semifinal teams and their scores in the semifinal
 		// matches
 		Team[] teams = new Team[4];
@@ -228,6 +231,8 @@ public class HeapBracket {
 		int maxScore = 0;
 		for (int i = 0; i < teams.length; i++) {
 			if (scores[i] > maxScore) {
+				if (teams[i].equals(getWinner()) || teams[i].equals(getSecondPlace()))
+					continue;
 				maxScore = scores[i];
 				third = teams[i];
 			}

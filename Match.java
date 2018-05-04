@@ -108,7 +108,7 @@ public class Match {
 	 * Mutator for score2
 	 */
 	public void setScore2(int s) {
-	    score1 = s;
+	    score2 = s;
 	}
 	
 	/**
