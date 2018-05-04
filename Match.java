@@ -82,7 +82,7 @@ public class Match {
 		else if (score2 > score1)
 			return team2;
 		else
-			return null;//handle ties
+			return isFinal() ? team1 : null;//handle ties
 	}
 	
 	public Team getLoser() {
@@ -91,7 +91,7 @@ public class Match {
 		else if (score2 < score1)
 			return team2;
 		else
-			return null;//handle ties
+			return isFinal() ? team2: null;//handle ties
 	}
 	
 	public String toString() {
