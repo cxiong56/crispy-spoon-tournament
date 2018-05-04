@@ -41,13 +41,31 @@ public class HeapBracket {
 		for (int i = 0; i < roundStart; i++) {
 			matches[i] = new Match(null, null, i);
 		}
-		for (int a = 0; a < teams.size() / 2; a++) {
-			matches[roundStart + a] = new Match(teams.get(a), teams.get(findOpponent(a)), roundStart + a);
+		Iterator<Integer> seeding = seedBracket(new ArrayList<Integer>()).iterator();
+		for (int i = 0; i < teams.size() / 2; i++) {//(int a = 0; a < teams.size() / 2; a++) {
+			matches[roundStart + i] = new Match(teams.get(seeding.next()), teams.get(seeding.next()), roundStart + i);
 		}
+		Match[] match = matches;
+		return;
 	}
 	
-	private static int findOpponent(int i) {
-		return teams.size() - i - 1;
+	private static Iterable<Integer> seedBracket(ArrayList<Integer> prev) {
+		ArrayList<Integer> next = new ArrayList<Integer>();
+		if (prev.isEmpty())
+			next.add(0);
+		else
+			for (int i : prev) {
+				next.add(i);
+				next.add(findOpponent(i, prev.size() * 2));
+			}
+		if (next.size() == teams.size())
+			return next;
+		else
+			return seedBracket(next);
+	}
+	
+	private static int findOpponent(int i, int size) {
+		return size - i - 1;
 	}
 
 	public static Team getTeam(String name) {
