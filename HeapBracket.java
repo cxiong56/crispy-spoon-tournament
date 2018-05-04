@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Stores the matches of the tournament in a heap style array. The 0th index is
+ * the championship, the 1st and 2nd are the semifinals, etc.
+ */
 public class HeapBracket {
 
 	// Heap type array of matches

@@ -46,7 +46,7 @@ public class Main extends Application {
 	}
 	
 	/**
-	 * update() updates the heapBracket, then draws up a new GUI
+	 * Updates the heapBracket, then draws up a new GUI
 	 * then sets it to the new and updated scene
 	 */
 	static void update() {

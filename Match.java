@@ -21,8 +21,6 @@ package application;
 
 /**
  * Contains the details of a match/game between two teams.
- * @author Henry
- *
  */
 public class Match {
 	private Team team1;
@@ -33,16 +31,16 @@ public class Match {
 	private boolean finalized = false;
 
 	/**
-	 * Creates a new match between two teams with the match num
+	 * Creates a new match between two teams with the given match number
 	 * 
 	 * @param team1
 	 * @param team2
-	 * @param num - what match this is
+	 * @param matchNum
 	 */
-	public Match(Team team1, Team team2, int num) {
+	public Match(Team team1, Team team2, int matchNum) {
 		this.team1 = team1;
 		this.team2 = team2;
-		this.matchNum = num;
+		this.matchNum = matchNum;
 	}
 
 	/**
@@ -58,80 +56,71 @@ public class Match {
 	}
 	
 	/**
-	 * @return - returns team1
+	 * Accessor for team1
 	 */
 	public Team getTeam1() {
 		return team1;
 	}
 	
 	/**
-	 * Sets team1 to team t
-	 * @param t - provided team
+	 * Mutator for team1
 	 */
 	public void setTeam1(Team t) {
 		team1 = t;
 	}
-	
+
 	/**
-	 * Sets score1 to score s
-	 * @param s
-	 */
-	public void setScore1(int s) {
-	    score1 = s;
-	}
-	
-	/**
-	 * @return - returns the score for team 1
+	 * Accessor for score1
 	 */
 	public int getScore1() {
 	    return score1;
 	}
 	
 	/**
-	 * @return - returns team2
+	 * Mutator for score1
+	 */
+	public void setScore1(int s) {
+	    score1 = s;
+	}
+	
+	/**
+	 * Accessor for team2
 	 */
 	public Team getTeam2() {
 		return team2;
 	}
 	
 	/**
-	 * Sets team2 to team t
-	 * @param t - provided team
+	 * Mutator for team2
 	 */
 	public void setTeam2(Team t) {
 		team2 = t;
 	}
-	
+
 	/**
-	 * Sets score2 to score s
-	 * @param s
-	 */
-	public void setScore2(int s) {
-        score2 = s;
-    }
-	
-	/**
-	 * Sets score2 to score s
-	 * @param s
+	 * Accessor for score2
 	 */
 	public int getScore2() {
 	    return score2;
 	}
 	
 	/**
-	 * 
-	 * @return - the match number of this match
+	 * Mutator for score2
+	 */
+	public void setScore2(int s) {
+	    score1 = s;
+	}
+	
+	/**
+	 * Accessor for match number
 	 */
 	public int getNum() {
 	    return matchNum;
 	}
 
 	/**
-	 * Compares the scores of the two teams if finalized and returns the team with
-	 * the highest score as the winner. IF the score is the same randomly chooses a
-	 * winner.
-	 * 
-	 * @return
+	 * Returns the winner of this match
+	 * Will default to team1 in a tie
 	 */
 	public Team getWinner() {
 		if (score1 > score2)
@@ -139,16 +128,20 @@ public class Match {
 		else if (score2 > score1)
 			return team2;
 		else
-			return isFinal() ? team1 : null;//handle ties
+			return isFinal() ? team1 : null;
 	}
 	
+	/**
+	 * Returns the team that lost this match
+	 * Will default to team2 in a tie
+	 */
 	public Team getLoser() {
 		if (score1 < score2)
 			return team1;
 		else if (score2 < score1)
 			return team2;
 		else
-			return isFinal() ? team2: null;//handle ties
+			return isFinal() ? team2: null;
 	}
 	
 	/**
@@ -167,7 +160,6 @@ public class Match {
 	
 	/**
 	 * Checks if the score has been finalized
-	 * @return
 	 */
 	public boolean isFinal() {
 	    return finalized;
