@@ -2,7 +2,6 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,8 +44,6 @@ public class HeapBracket {
 		for (int i = 0; i < teams.size() / 2; i++) {//(int a = 0; a < teams.size() / 2; a++) {
 			matches[roundStart + i] = new Match(teams.get(seeding.next()), teams.get(seeding.next()), roundStart + i);
 		}
-		Match[] match = matches;
-		return;
 	}
 	
 	private static Iterable<Integer> seedBracket(ArrayList<Integer> prev) {

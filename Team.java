@@ -2,7 +2,6 @@ package application;
 
 public class Team {
 	private String name;
-	private int score;
 	private int seed;
 	private boolean finalized; 
 
@@ -20,7 +19,6 @@ public class Team {
 	 */
 	public Team(String name) {
 		this.name = name;
-		this.score = 0;
 	}
 
 	/**
