@@ -20,11 +20,13 @@ import javafx.scene.text.Font;
 
 public class Update {
 
+	/**
+	 * Creates the GUI based on the current state of the bracket
+	 * 
+	 * @return - the GridPane containing the GUI
+	 */
 	public static Node drawGUI() {
 		GridPane root = new GridPane();
-		// for (int i = 0; i <= 100; i++)
-		// for (int j = 0; j <= 100; j++)
-		// root.add(new Label(i + "," + j), i, j);
 		int leftCol = 0;
 		int rightCol = (HeapBracket.numRounds() - 1) * 2 + 1;
 		int padding = 10;
@@ -63,8 +65,6 @@ public class Update {
 			List<Match> round = HeapBracket.getRound(curRound);
 			int left = 0;
 			int right = round.size() / 2;
-
-			// root.add(child, columnIndex, rowIndex);
 			for (; left < right; left++)
 				root.add(makeMatch(round.get(left)), leftCol, left + padding);
 			for (; right < round.size(); right++)
