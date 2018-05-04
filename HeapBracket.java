@@ -29,42 +29,63 @@ import java.util.List;
 
 public class HeapBracket {
 
+	// Heap type array of matches
 	private static Match[] matches;
+	// Total number of matches
 	private static int numMatches;
+	// Total number of rounds
 	private static int numRounds;
+	// List of the teams in the tournament
 	static List<Team> teams;
 
+	/**
+	 * Initializes the bracket based on an input file
+	 * 
+	 * @param inputFile
+	 * @throws IOException
+	 *             - If there's problems with reading the file
+	 */
 	public static void setupHeapBracket(File inputFile) throws IOException {
 		teams = new ArrayList<Team>();
+
+		// Read teams from inputFile
 		BufferedReader inputReader = new BufferedReader(new FileReader(inputFile));
-		int temp = 1;
+		int ranking = 1;
 		while (inputReader.ready()) {
 			String in = inputReader.readLine();
-
 			if (in != null)
-				teams.add(new Team(in, temp));
-			temp++;
+				teams.add(new Team(in, ranking));
+			ranking++;
 		}
 		inputReader.close();
-		
-		if(teams.size() == 0) {
+
+		if (teams.size() == 0) {
 			return;
 		}
-		
+
 		numMatches = teams.size() - 1;
 		numRounds = (int) (Math.log(teams.size()) / Math.log(2));
 		matches = new Match[numMatches];
 
-		int roundStart = (int) (Math.pow(2, numRounds - 1)) - 1;
-		for (int i = 0; i < roundStart; i++) {
+		int firstRoundStart = (int) (Math.pow(2, numRounds - 1)) - 1;
+		// Initialize the 2nd through final rounds with empty matches
+		for (int i = 0; i < firstRoundStart; i++) {
 			matches[i] = new Match(null, null, i);
 		}
+		// Initialize the 1st round based on proper tournament seeding
 		Iterator<Integer> seeding = seedBracket(new ArrayList<Integer>()).iterator();
-		for (int i = 0; i < teams.size() / 2; i++) {//(int a = 0; a < teams.size() / 2; a++) {
-			matches[roundStart + i] = new Match(teams.get(seeding.next()), teams.get(seeding.next()), roundStart + i);
+		for (int i = 0; i < teams.size() / 2; i++) {
+			Match m = new Match(teams.get(seeding.next()), teams.get(seeding.next()), firstRoundStart + i);
+			matches[firstRoundStart + i] = m;
 		}
 	}
-	
+
+	/**
+	 * A recursive helper method for seeding the bracket. Returns an Iterable
+	 * containing pairs of zero indexed Integers denoting two teams to play each
+	 * other in the first match. e.g. 1 team: {0} 2 teams: {0, 1} 4 teams: {0,
+	 * 3, 1, 2} 8 teams: {0, 7, 3, 4, 1, 6, 2, 5} etc.
+	 */
 	private static Iterable<Integer> seedBracket(ArrayList<Integer> prev) {
 		ArrayList<Integer> next = new ArrayList<Integer>();
 		if (prev.isEmpty())
@@ -79,24 +100,19 @@ public class HeapBracket {
 		else
 			return seedBracket(next);
 	}
-	
+
+	/**
+	 * A helper method for seedBracket() Finds the index of the team the team at
+	 * index i would play in a tournament with size teams.
+	 */
 	private static int findOpponent(int i, int size) {
 		return size - i - 1;
 	}
 
-	public static Team getTeam(String name) {
-		// compare name give to names of the teams in the array
-		for (int i = 0; i < teams.size(); i++) {
-			if (name.equals(teams.get(i).getName())) {
-				return teams.get(i);
-			} else {
-				// loop
-			}
-		}
-		return null;
-
-	}
-
+	/**
+	 * Returns a list of the matches in a given round based on that round's
+	 * number.
+	 */
 	public static List<Match> getRound(int roundNum) {
 		List<Match> round = new ArrayList<Match>();
 		int numInRound = numInRound(roundNum);
@@ -106,77 +122,83 @@ public class HeapBracket {
 		return round;
 	}
 
+	/**
+	 * Accessor method for the number of rounds
+	 */
 	public static int numRounds() {
 		return numRounds;
 	}
 
+	/**
+	 * Returns the number of matches in a given round
+	 */
 	public static int numInRound(int round) {
 		return (int) (Math.pow(2, round - 1));
 	}
 
+	/**
+	 * Updates the state of the HeapBracket based on any won matches.
+	 */
 	public static void update() {
 		for (int index = matches.length - 1; index >= 0; index--) {
-			Match l = null, r = null;
+			Match left = null, right = null;
 			try {
-				l = matches[getLeft(index)];
-				r = matches[getRight(index)];
+				left = matches[getLeft(index)];
+				right = matches[getRight(index)];
 			} catch (ArrayIndexOutOfBoundsException e) {
 				continue;
 			}
-			if (l.getWinner() != null)
-				matches[index].setTeam1(l.getWinner());
+			if (left.getWinner() != null)
+				matches[index].setTeam1(left.getWinner());
 			else
 				matches[index].setTeam1(null);
-			if (r.getWinner() != null)
-				matches[index].setTeam2(r.getWinner());
+			if (right.getWinner() != null)
+				matches[index].setTeam2(right.getWinner());
 			else
 				matches[index].setTeam2(null);
 		}
-//		for (int curRound = numRounds - 1; curRound >= 0; curRound--) {
-//			int roundStart = numInRound(curRound) - 1;
-//			for (int curMatch = 0; curMatch < numInRound(curRound); curMatch++) {
-//				int index = roundStart + curMatch;
-//				if (matches[getLeft(index)] != null && matches[getLeft(index)].getWinner() != null)
-//					matches[index].setTeam1(matches[getLeft(index)].getWinner());
-//				if (matches[getRight(index)] != null && matches[getRight(index)].getWinner() != null)
-//					matches[index].setTeam2(matches[getRight(index)].getWinner());
-//			}
-//		}
 	}
 
+	/**
+	 * Returns the index of the match that determines team1 of the match at the
+	 * given index
+	 */
 	private static int getLeft(int index) {
 		return (index + 1) * 2 - 1;
 	}
 
+	/**
+	 * Returns the index of the match that determines team2 of the match at the
+	 * given index
+	 */
 	private static int getRight(int index) {
 		return getLeft(index) + 1;
 	}
 
-	public static int getMatchNumber(String team) {
-		int match = 0;
-		for (int i = 1; i < matches.length; i++) {
-			if (matches[i].getTeam1().getName() == (team) || matches[i].getTeam2().getName() == (team)) {
-				match = i;
-				System.out.println(match);
-			}
-
-		}
-		return match;
-	}
-	
+	/**
+	 * Returns the team that won the tournament
+	 */
 	public static Team getWinner() {
 		if (matches != null && matches.length > 0 && matches[0] != null)
 			return matches[0].getWinner();
 		return null;
 	}
 
+	/**
+	 * Returns the team that got second place in the tournament
+	 */
 	public static Team getSecondPlace() {
 		if (matches != null && matches.length > 0 && matches[0] != null)
 			return matches[0].getLoser();
 		return null;
 	}
-	
+
+	/**
+	 * Returns the team that got third place in the tournament.
+	 */
 	public static Team getThirdPlace() {
+		// Create array of the semifinal teams and their scores in the semifinal
+		// matches
 		Team[] teams = new Team[4];
 		int[] scores = new int[4];
 		if (matches == null || matches.length < 4)
@@ -197,6 +219,7 @@ public class HeapBracket {
 			teams[3] = m.getTeam2();
 			scores[3] = m.getScore2();
 		}
+		// Return the team that had the highest score in a semifinal
 		Team third = null;
 		int maxScore = 0;
 		for (int i = 0; i < teams.length; i++) {
