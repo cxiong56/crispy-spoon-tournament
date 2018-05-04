@@ -41,9 +41,13 @@ public class HeapBracket {
 		for (int i = 0; i < roundStart; i++) {
 			matches[i] = new Match(null, null, i);
 		}
-		for (int a = 0, b = teams.size() - 1; a < b; a++, b--) {
-			matches[roundStart + a] = new Match(teams.get(a), teams.get(b), roundStart + a);
+		for (int a = 0; a < teams.size() / 2; a++) {
+			matches[roundStart + a] = new Match(teams.get(a), teams.get(findOpponent(a)), roundStart + a);
 		}
+	}
+	
+	private static int findOpponent(int i) {
+		return teams.size() - i - 1;
 	}
 
 	public static Team getTeam(String name) {

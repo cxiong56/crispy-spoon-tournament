@@ -1,2 +1,16 @@
 delete
 steep
+variant
+absorb
+serve
+coach
+exception
+monk
+haunt
+camp
+invite
+residence
+beginning
+suppress
+column
+wonder
