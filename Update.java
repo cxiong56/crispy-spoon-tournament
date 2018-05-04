@@ -93,12 +93,27 @@ public class Update {
 		return root;
 	}
 
+	/**
+	 * Checks to see if matches are null and if not calls next makeMatch.
+	 * 
+	 * @param m
+	 * @return Node
+	 */
 	private static Node makeMatch(Match m) {
 		if (m != null)
 			return makeMatch(m.getTeam1(), m.getTeam2(), m);
 		return makeMatch(null, null, m);
 	}
 
+	/**
+	 * Creates a VBox that adds a button.  Also adds winner to the
+	 * championship match.
+	 * 
+	 * @param t1
+	 * @param t2
+	 * @param m
+	 * @return - VBox match
+	 */
 	private static Node makeMatch(Team t1, Team t2, Match m) {
 		VBox match = new VBox();
 		Button addScore = new Button("Add Score");
@@ -137,7 +152,13 @@ public class Update {
 				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 		return match;
 	}
-
+	/**
+	 * Creates an HBox for team and adds the team, seed, and score.
+	 * 
+	 * @param team
+	 * @param score
+	 * @return HBox teamBox
+	 */
 	private static Node makeTeam(Team team, int score) {
 		if (team == null)
 			return new HBox();
@@ -154,6 +175,13 @@ public class Update {
 	private static boolean answer1; // cant seem to find a simpler solution to
 									// this
 
+	/**
+	 * Checks to make sure the scores are correctly added.  If not it will
+	 * bring up the screen telling the user to put in correct numbers.
+	 * 
+	 * @param m
+	 * @return - boolean answer1
+	 */
 	protected static boolean finalScoreEdit(Match m) {
 
 		Stage stage = new Stage();
@@ -241,6 +269,18 @@ public class Update {
 
 	private static boolean answer2;
 
+	/**
+	 * If the scores are correctly put in a screen will be created
+	 * to let the user know that once the "Yes" button is pressed
+	 * the scores will not be editable.  If "No" is pressed then 
+	 * the user will be brought back to the tournament and will be
+	 * able to edit the scores again.
+	 * 
+	 * @param m
+	 * @param s1
+	 * @param s2
+	 * @return - boolean answer2
+	 */
 	private static boolean confirmScore(Match m, int s1, int s2) {
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -284,7 +324,12 @@ public class Update {
 		
 		return answer2;
 	}
-
+	/**
+	 * Creates an error screen.
+	 * 
+	 * @param title
+	 * @param message
+	 */
 	private static void errorAlert(String title, String message) {
 		Stage window = new Stage();
 
@@ -307,7 +352,11 @@ public class Update {
 		java.awt.Toolkit.getDefaultToolkit().beep();// alert sound
 		window.showAndWait();// display and wait until the window is closed
 	}
-
+	/**
+	 * Creates a VBox to place the first, second, and third place teams.
+	 * 
+	 * @return -VBox podium
+	 */
 	private static Node makePodium() {
 		VBox podium = new VBox();
 		Team t1 = HeapBracket.getWinner();
