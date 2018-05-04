@@ -127,13 +127,13 @@ public class HeapBracket {
 	}
 	
 	public static Team getWinner() {
-		if (matches[0] != null)
+		if (matches != null && matches.length > 0 && matches[0] != null)
 			return matches[0].getWinner();
 		return null;
 	}
 
 	public static Team getSecondPlace() {
-		if (matches[0] != null)
+		if (matches != null && matches.length > 0 && matches[0] != null)
 			return matches[0].getLoser();
 		return null;
 	}
@@ -141,6 +141,8 @@ public class HeapBracket {
 	public static Team getThirdPlace() {
 		Team[] teams = new Team[4];
 		int[] scores = new int[4];
+		if (matches == null || matches.length < 4)
+			return null;
 		if (!matches[1].isFinal() || !matches[2].isFinal())
 			return null;
 		if (matches[1] != null) {

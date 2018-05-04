@@ -22,9 +22,9 @@ public class Update {
 
 	public static Node drawGUI() {
 		GridPane root = new GridPane();
-//		for (int i = 0; i <= 100; i++)
-//			for (int j = 0; j <= 100; j++)
-//				root.add(new Label(i + "," + j), i, j);
+		// for (int i = 0; i <= 100; i++)
+		// for (int j = 0; j <= 100; j++)
+		// root.add(new Label(i + "," + j), i, j);
 		int leftCol = 0;
 		int rightCol = (HeapBracket.numRounds() - 1) * 2 + 1;
 		int padding = 10;
@@ -288,9 +288,15 @@ public class Update {
 
 	private static Node makePodium() {
 		VBox podium = new VBox();
-		podium.getChildren().add(new Label("1st place: " + HeapBracket.getWinner()));
-		podium.getChildren().add(new Label("2nd place: " + HeapBracket.getSecondPlace()));
-		podium.getChildren().add(new Label("3rd place: " + HeapBracket.getThirdPlace()));
+		Team t1 = HeapBracket.getWinner();
+		Team t2 = HeapBracket.getSecondPlace();
+		Team t3 = HeapBracket.getThirdPlace();
+		if (HeapBracket.teams.size() > 1)
+			podium.getChildren().add(new Label(" 1st place: " + (t1 == null ? "" : t1)));
+		if (HeapBracket.teams.size() > 1)
+			podium.getChildren().add(new Label(" 2nd place: " + (t2 == null ? "" : t2)));
+		if (HeapBracket.teams.size() > 2)
+			podium.getChildren().add(new Label(" 3rd place: " + (t3 == null ? "" : t3)));
 		return podium;
 	}
 }

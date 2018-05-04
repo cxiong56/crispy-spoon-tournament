@@ -1,8 +1,2 @@
 delete
 steep
-variant
-absorb
-serve
-coach
-exception
-monk
