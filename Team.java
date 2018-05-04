@@ -1,3 +1,22 @@
+/////////////////////////////////////////////////////////////////////////////
+//Semester:         CS400 Spring 2018
+//PROJECT:          cs400_Team Project Milestone 3
+//FILES:            Main.java
+//                  HeapBracket.java
+//                  Match.java
+//                  Team.java
+//                  Update.java
+//
+//Team:             Brock Wroblewski
+//                  Khai Bin Woon
+//                  Amber Westlund
+//                  Henry Wieland
+//                  Chaly Xiong
+//
+//Instructor:       Deb Deppeler (deppeler@cs.wisc.edu)
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package application;
 
 public class Team {
