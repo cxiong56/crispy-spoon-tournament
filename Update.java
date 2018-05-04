@@ -39,8 +39,6 @@ import javafx.scene.text.Font;
 /**
  * This class updates the bracket as scores are added until the final winner is determined.
  * 
- * @author Chaly 
- *
  */
 
 public class Update {
